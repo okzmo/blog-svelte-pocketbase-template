@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
 	import { pb } from '$lib/pocketbase';
-	import { page } from '$app/stores';
 
 	type registerType = {
 		data: {
@@ -26,7 +25,7 @@
 				pb.authStore.loadFromCookie(document.cookie);
 				await applyAction(result);
 
-				if (result.data.errors) {
+				if (result?.data?.errors) {
 					form.password.value = '';
 					form.passwordConfirm.value = '';
 				}

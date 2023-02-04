@@ -9,12 +9,12 @@ const registerSchema = z.object({
 		.max(64, { message: 'Email must be less than 64 characters' })
 		.email(),
 	password: z
-		.string({ required_error: 'Email is required' })
+		.string({ required_error: 'Password is required' })
 		.min(8, { message: 'Password must be at least 8 characters' })
 		.max(64, { message: 'Password must be less than 64 characters' })
 		.trim(),
 	passwordConfirm: z
-		.string({ required_error: 'Email is required' })
+		.string({ required_error: 'Confirm Password is required' })
 		.min(8, { message: 'Password must be at least 8 characters' })
 		.max(64, { message: 'Password must be less than 64 characters' })
 		.trim()
@@ -31,7 +31,7 @@ const registerSchema = z.object({
             path: ['passwordConfirm']
         })
     }
-});;
+});
 
 export const actions: Actions = {
 	default: async ({ locals, request }) => {
