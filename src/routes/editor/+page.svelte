@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { enhance, applyAction } from '$app/forms';
 	import Markdown from '@magidoc/plugin-svelte-marked';
+	import { pb } from '$lib/pocketbase';
 
 	let string = '';
 </script>
@@ -12,15 +14,17 @@
 </svelte:head>
 
 <div class="container">
-	<div class="post">
-		<textarea name="markdown" id="markdown" class="markdown" bind:value={string} />
-		<div class="preview">
-			<Markdown source={string} />
+	<form action="" method="POST" class="markdownContainer">
+		<div class="post">
+			<textarea name="content" id="content" class="markdown" bind:value={string} />
+			<div class="preview">
+				<Markdown source={string} />
+			</div>
 		</div>
-	</div>
-	<div class="send">
-		<button>Post</button>
-	</div>
+		<div class="send">
+			<button type="submit">Post</button>
+		</div>
+	</form>
 </div>
 
 <style>
@@ -31,6 +35,10 @@
 		display: flex;
 		font-family: 'Outfit';
 		flex-direction: column;
+	}
+
+	.markdownContainer {
+		height: 92vh;
 	}
 
 	.post {
@@ -75,8 +83,8 @@
 		background-color: #d6d1b7;
 		border: none;
 		border-right: 2px solid black;
-		font-size: 1.6vh;
 		padding: 5vh;
+		font-size: 1.6vh;
 	}
 
 	.preview {
@@ -85,12 +93,7 @@
 		resize: none;
 		background-color: #d6d1b7;
 		border: none;
-		border-right: 2px solid black;
 		font-size: 1.6vh;
 		padding: 5vh;
-	}
-
-	.markdown:focus {
-		border-color: black;
 	}
 </style>
