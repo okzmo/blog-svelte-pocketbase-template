@@ -1,22 +1,34 @@
-import type { Actions } from "@sveltejs/kit";
-import {z} from 'zod';
+import type { Actions } from '@sveltejs/kit';
+import { z } from 'zod';
 
 const postSchema = z.object({
-    content: z.string().min(64).trim(),
-    author: z.string().min(6).max(48).trim(),
-    picture: z.string().optional(),
-})
+	content: z
+		.string({ required_error: 'Your post need content to be posted.' })
+		.min(64, { message: 'Your post must be at least 64 characters.' })
+		.trim(),
+	author: z.string({ required_error: 'You need to be connected.' }),
+	picture: z.string().optional(),
+	author_id: z.string({ required_error: 'You need to be connected.' })
+});
 
 export const actions: Actions = {
-    default: async ({locals, request}) => {
-        const data = Object.fromEntries(await request.formData());
+	default: async ({ locals, request }) => {
+		const data = Object.fromEntries(await request.formData());
 
-        const result = postSchema.parse({
-            content: data.content,
-            author: locals.user?.name
-        });
+		try {
+			const result = postSchema.parse({
+				content: data.content,
+				author: await locals.user?.name,
+				author_id: locals.user?.id
+			});
 
-        console.log(result);
+			await locals.pb.collection('posts').create(result);
+		} catch (err) {
+			const { fieldErrors: errors } = err.flatten();
 
-    }
+			return {
+				errors
+			};
+		}
+	}
 };

@@ -4,6 +4,14 @@
 	import { pb } from '$lib/pocketbase';
 
 	let string = '';
+
+	type postType = {
+		errors: {
+			content: string;
+		};
+	};
+
+	export let form: postType;
 </script>
 
 <svelte:head>
@@ -14,7 +22,20 @@
 </svelte:head>
 
 <div class="container">
-	<form action="" method="POST" class="markdownContainer">
+	{#if form?.errors?.content}
+		<p>{form?.errors?.content}</p>
+	{/if}
+	<form
+		action=""
+		method="POST"
+		class="markdownContainer"
+		use:enhance={() => {
+			return async ({ result }) => {
+				pb.authStore.loadFromCookie(document.cookie);
+				await applyAction(result);
+			};
+		}}
+	>
 		<div class="post">
 			<textarea name="content" id="content" class="markdown" bind:value={string} />
 			<div class="preview">
