@@ -1,0 +1,97 @@
+/**
+ * @license
+ *
+ * Font Family: Outfit
+ * Designed by: On Brand Investments Pty Ltd, Rodrigo Fuenzalida
+ * URL: https://www.fontshare.com/fonts/outfit
+ * © 2022 Indian Type Foundry
+ *
+ * Font Styles:
+ * Outfit Variable(Variable font)
+ * Outfit Thin
+ * Outfit Extra Light
+ * Outfit Light
+ * Outfit Regular
+ * Outfit Medium
+ * Outfit Semi Bold
+ * Outfit Bold
+ * Outfit Extra Bold
+ * Outfit Black
+ *
+*/
+
+
+/**
+* This is a variable font
+* You can controll variable axes as shown below:
+* font-variation-settings: 'wght' 100.0;
+*
+* available axes:
+
+* 'wght' (range from 100.0 to 900.0)
+
+*/
+
+@font-face {
+  font-family: 'Outfit-Light';
+  src: url('./outfit/Outfit-Light.woff2') format('woff2'),
+       url('./outfit/Outfit-Light.woff') format('woff'),
+       url('./outfit/Outfit-Light.ttf') format('truetype');
+       font-weight: 300;
+       font-display: swap;
+       font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Outfit-Regular';
+  src: url('./outfit/Outfit-Regular.woff2') format('woff2'),
+       url('./outfit/Outfit-Regular.woff') format('woff'),
+       url('./outfit/Outfit-Regular.ttf') format('truetype');
+       font-weight: 400;
+       font-display: swap;
+       font-style: normal;
+}
+
+@font-face {
+  font-family: 'Outfit-Medium';
+  src: url('./outfit/Outfit-Medium.woff2') format('woff2'),
+       url('./outfit/Outfit-Medium.woff') format('woff'),
+       url('./outfit/Outfit-Medium.ttf') format('truetype');
+       font-weight: 500;
+       font-display: swap;
+       font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Outfit-Bold';
+  src: url('./outfit/Outfit-Bold.woff2') format('woff2'),
+       url('./outfit/Outfit-Bold.woff') format('woff'),
+       url('./outfit/Outfit-Bold.ttf') format('truetype');
+       font-weight: 700;
+       font-display: swap;
+       font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Outfit-ExtraBold';
+  src: url('./outfit/Outfit-ExtraBold.woff2') format('woff2'),
+       url('./outfit/Outfit-ExtraBold.woff') format('woff'),
+       url('./outfit/Outfit-ExtraBold.ttf') format('truetype');
+       font-weight: 800;
+       font-display: swap;
+       font-style: normal;
+}
+
+
+@font-face {
+  font-family: 'Outfit-Black';
+  src: url('./outfit/Outfit-Black.woff2') format('woff2'),
+       url('./outfit/Outfit-Black.woff') format('woff'),
+       url('./outfit/Outfit-Black.ttf') format('truetype');
+       font-weight: 900;
+       font-display: swap;
+       font-style: normal;
+}
