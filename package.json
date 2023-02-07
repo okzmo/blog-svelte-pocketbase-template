@@ -37,6 +37,7 @@
 	"type": "module",
 	"dependencies": {
 		"isomorphic-dompurify": "^0.26.0",
+		"object-to-formdata": "^4.4.2",
 		"pocketbase": "^0.10.1",
 		"zod": "^3.20.2"
 	}

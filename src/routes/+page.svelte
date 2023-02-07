@@ -1,7 +1,7 @@
 <script>
 	import { applyAction, enhance } from '$app/forms';
-	import '../app.postcss';
 	import { currentUser, pb } from '$lib/pocketbase';
+	import '../app.postcss';
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
