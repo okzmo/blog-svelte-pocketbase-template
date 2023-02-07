@@ -1,17 +1,7 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
 	import { pb } from '$lib/pocketbase';
-
-	type registerType = {
-		data: {
-			email: string;
-		};
-		errors: {
-			email: string;
-			password: string;
-			passwordConfirm: string;
-		};
-	};
+	import type { registerType } from '../../types/types';
 
 	export let form: registerType;
 </script>

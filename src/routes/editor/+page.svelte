@@ -1,15 +1,31 @@
 <script lang="ts">
 	import { enhance, applyAction } from '$app/forms';
-	import Markdown from '@magidoc/plugin-svelte-marked';
+	import { marked } from 'marked';
 	import { pb } from '$lib/pocketbase';
+	import type { postType } from '../../types/types';
+	import DOMPurify from 'isomorphic-dompurify';
+
+	marked.setOptions({
+		renderer: new marked.Renderer(),
+		gfm: true,
+		breaks: true,
+		sanitize: false,
+		xhtml: false,
+		smartypants: true
+	});
+
+	const renderer = {
+		image(href: string, title: string, text: string) {
+
+			return `
+				<img src="${href}" alt="${text}" style="width: 100%; height: 300px; object-fit: cover" />
+			`
+		}
+	};
+
+	marked.use({ renderer });
 
 	let string = '';
-
-	type postType = {
-		errors: {
-			content: string;
-		};
-	};
 
 	export let form: postType;
 </script>
@@ -39,7 +55,9 @@
 		<div class="post">
 			<textarea name="content" id="content" class="markdown" bind:value={string} />
 			<div class="preview">
-				<Markdown source={string} />
+
+				{@html DOMPurify.sanitize(marked.parse(string.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, '')))
+					}
 			</div>
 		</div>
 		<div class="send">
@@ -106,6 +124,7 @@
 		border-right: 2px solid black;
 		padding: 5vh;
 		font-size: 1.6vh;
+		overflow: auto;
 	}
 
 	.preview {
@@ -116,5 +135,6 @@
 		border: none;
 		font-size: 1.6vh;
 		padding: 5vh;
+		overflow: auto;
 	}
 </style>

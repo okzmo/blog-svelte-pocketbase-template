@@ -13,7 +13,7 @@
 		>
 			<h1 class="text-[13vw] md:text-[10vw] lg:text-[5vw] lg:pl-[2.5vh] font-bold z-[2]">
 				{#if $currentUser}
-					HEY, USERNAME
+					Hey, {$currentUser.username}
 				{:else}
 					HELLO, THERE!
 				{/if}
