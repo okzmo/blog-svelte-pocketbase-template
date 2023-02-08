@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { ActionData } from './../../../.svelte-kit/types/src/routes/login/$types.d.ts';
 	import { applyAction, enhance } from '$app/forms';
 	import { pb } from '$lib/pocketbase';
 	import type { registerType } from '../../types/types';
@@ -12,11 +11,11 @@
 		method="POST"
 		class="flex flex-col justify-center bg-slate-700 p-6 items-center w-2/5 h-2/5"
 		use:enhance={({ form }) => {
-			return async ({ result}) => {
+			return async ({ result }) => {
 				pb.authStore.loadFromCookie(document.cookie);
 				await applyAction(result);
 
-				if (result?.data?.errors) {
+				if (result?.type === 'failure') {
 					form.password.value = '';
 					form.passwordConfirm.value = '';
 				}

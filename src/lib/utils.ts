@@ -1,6 +1,5 @@
 export const validateData = async (formData: FormData, zodSchema: any) => {
     const body = Object.fromEntries(formData);
-    console.log(body);
     
     try {
         const data = zodSchema.parse(body);

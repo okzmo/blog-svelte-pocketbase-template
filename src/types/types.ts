@@ -1,6 +1,7 @@
 export type postType = {
     errors: {
         content: string;
+        picture: string;
     };
 };
 

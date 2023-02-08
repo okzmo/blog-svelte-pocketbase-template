@@ -5,6 +5,8 @@
 	import { currentUser } from '$lib/pocketbase';
 	import type { postType } from '../../types/types';
 	import DOMPurify from 'isomorphic-dompurify';
+	import toast from 'svelte-french-toast';
+	import { update } from 'svelte-french-toast/core/store';
 
 	marked.setOptions({
 		renderer: new marked.Renderer(),
@@ -27,22 +29,20 @@
 
 	let string = '';
 
-	const author = $currentUser?.id;
-
+	const author = $currentUser?.name;
 
 	function test(e: Event) {
 		const target = e.currentTarget as HTMLInputElement;
 		let file: File | null = target.files![0];
 
-		const bannerImg:HTMLImageElement|null = document.querySelector("#banner-uploaded");
+		const bannerImg: HTMLImageElement | null = document.querySelector('#banner-uploaded');
 		let reader = new FileReader();
-		reader.onload = function(e) {
-				bannerImg!.style.display = "block";
-				bannerImg!.src = e.target?.result as string;
-		}
-		reader.readAsDataURL(file)
+		reader.onload = function (e) {
+			bannerImg!.style.display = 'block';
+			bannerImg!.src = e.target?.result as string;
+		};
+		reader.readAsDataURL(file);
 	}
-
 
 	export let form: postType;
 </script>
@@ -61,9 +61,26 @@
 		class="markdownContainer"
 		enctype="multipart/form-data"
 		use:enhance={() => {
-			return async ({ result }) => {
+			return async ({ result, update }) => {
 				pb.authStore.loadFromCookie(document.cookie);
 				await applyAction(result);
+
+				switch (result.type) {
+					case 'success':
+						await update();
+						break;
+					case 'failure':
+						Object.values(form.errors).forEach((error) => {
+							toast.error(error[0]);
+						});
+						await update();
+						break;
+					case 'error':
+						toast.error(result.error.message);
+						break;
+					default:
+						await update();
+				}
 			};
 		}}
 	>
@@ -74,7 +91,7 @@
 					<label for="picture" class="custom-picture"> Choose a banner for your post </label>
 					<input id="picture" name="picture" accept="image/*" type="file" on:change={test} />
 				</div>
-				<img src="" alt="" id="banner-uploaded">
+				<img src="" alt="" id="banner-uploaded" />
 				{@html DOMPurify.sanitize(
 					marked.parse(string.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, ''))
 				)}
@@ -82,14 +99,10 @@
 		</div>
 
 		<div class="send">
-			{#if form?.errors?.content}
-				<p class="error">{form?.errors?.content}</p>
-			{/if}
 			<button type="submit">Post</button>
 		</div>
 
-		<input type="text" name="author" hidden value={author}>
-
+		<input type="text" name="author" hidden value={author} />
 	</form>
 </div>
 
@@ -123,14 +136,9 @@
 		width: 100%;
 		border-top: 2px solid black;
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-end;
 		align-items: center;
 		padding: 0 1.5vh;
-	}
-
-	.error {
-		color: rgb(217, 64, 64);
-		font-size: 2vh;
 	}
 
 	button {

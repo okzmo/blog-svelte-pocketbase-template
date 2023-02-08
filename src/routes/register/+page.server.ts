@@ -1,4 +1,4 @@
-import { redirect } from '@sveltejs/kit';
+import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { z } from 'zod';
 
@@ -49,10 +49,10 @@ export const actions: Actions = {
             // sending back data to client except passwords
             const { password, passwordConfirm, ...rest } = data; 
 
-            return {
-                data: rest,
-                errors
-            }
+			return fail(400, {
+				data: rest,
+				errors
+			})
 		}
 
 		throw redirect(303, '/');

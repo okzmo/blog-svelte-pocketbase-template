@@ -1,4 +1,4 @@
-import type { Actions } from '@sveltejs/kit';
+import { error, redirect, type Actions } from '@sveltejs/kit';
 import { z } from 'zod';
 import { serialize } from 'object-to-formdata'; 
 import { validateData } from '$lib/utils';
@@ -19,18 +19,22 @@ const postSchema = z.object({
 	author: z.string({ required_error: 'You need to be connected.' }),
 	picture: z.instanceof(Blob).superRefine((val, ctx) => {
 		if(val) {
-			if(val.size > 5242880) {
-				ctx.addIssue({
-					code: z.ZodIssueCode.custom,
-					message: 'Banner must be less than 5MB'
-				})
-			}
-
-			if(!imageTypes.includes(val.type)) {
-				ctx.addIssue({
-					code: z.ZodIssueCode.custom,
-					message: 'Your image type is not supported. Supported formats : jpeg, jpg, png, webp'
-				})
+			if(val.size === 0) {
+				ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'A banner is required'})
+			} else {
+				if(val.size > 5242880) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: 'Banner must be less than 5MB'
+					})
+				}
+	
+				if(!imageTypes.includes(val.type)) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: 'Your image type is not supported. Supported formats : jpeg, jpg, png, webp'
+					})
+				}
 			}
 		}
 	})
@@ -41,26 +45,27 @@ export const actions: Actions = {
 		const body = await request.formData();
 		
 		const { formData, errors } = await validateData(body, postSchema);
-		const { image, ...rest } = formData;
+		const { picture, ...rest } = formData;
+		console.log(formData);
 
 		if(errors) {
+			console.log(errors);
 			return fail(400, {
 				data: rest,
 				errors: errors.fieldErrors
 			})
 		}
 
-		console.log(body);
 
 		try {
 			await locals.pb.collection('posts').create(serialize(formData));
 		} catch (err) {
-			const { fieldErrors: errors } = err;
-			console.log(err.data)
+			console.error('Error : ', err)
 
-			return {
-				errors
-			};
+			throw error(err.status, err.message)
 		}
+
+
+		throw redirect(303, '/');
 	}
 };

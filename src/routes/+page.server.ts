@@ -1,4 +1,5 @@
-import { redirect, type Actions } from "@sveltejs/kit";
+import { error, redirect, type Actions } from "@sveltejs/kit";
+import type { PageServerLoad } from './$types';
 
 export const actions: Actions = {
     default: async function({locals, request}) {
@@ -18,3 +19,20 @@ export const actions: Actions = {
         throw redirect(303, '/');
     }
 }
+
+export const load = (async ({ locals }) => {
+
+    const fetchPosts = async () => {
+        try {
+            const records = structuredClone(await locals.pb.collection('posts').getFullList())
+            return records;
+        } catch(err) {
+            console.log('Error: ', err);
+            throw error(err.status, err.message);
+        }
+    }
+
+    return {
+        posts: fetchPosts(),
+    }
+}) satisfies PageServerLoad
