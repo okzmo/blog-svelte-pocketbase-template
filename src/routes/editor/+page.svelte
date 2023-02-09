@@ -85,25 +85,28 @@
 			};
 		}}
 	>
-		<div class="flex w-full h-full items-center">
-			<div class="w-1/2 h-full border-r-[0.3vh] border-black flex flex-col pt-[5vh] overflow-auto">
-				<input type="text" name="title" id="title" placeholder="Enter your title here" class="py-[1vh] text-[4vh] font-black text-black placeholder:text-black/70 bg-[#d6d1b7] focus-visible:outline-none leading-none mb-[4vh]  px-[5vh]" bind:value={title}  autocomplete="off"/>
-				<textarea name="content" id="content" placeholder="Enter your content here (Markdown supported)" class="placeholder:text-black/60 resize-none text-[1.6vh] bg-[#d6d1b7] focus-visible:outline-none h-full  px-[5vh]" bind:value={content} />
+		<div class="w-full h-full flex flex-col items-center">
+			
+			<div class="flex w-full h-fit prose max-w-full items-center">
+				<input type="text" name="title" id="title" placeholder="Enter your title here" class="text-4xl font-black text-black placeholder:text-black/70 bg-[#d6d1b7] focus-visible:outline-none w-1/2 p-[5vh] border-r-[0.3vh] border-black" bind:value={title}  autocomplete="off"/>
+				<h1 class="w-1/2 p-[5vh]">{title}</h1>
 			</div>
-			<div class="w-1/2 h-full resize-none p-[5vh] overflow-auto relative prose prose-neutral max-w-full">
-				<div id="file-upload-pos">
-					<label for="picture" class="custom-picture"> Choose a banner for your post </label>
-					<input id="picture" name="picture" accept="image/*" type="file" on:change={test} />
-				</div>
-				<img src="" alt="" id="banner-uploaded" />
-				<h1 class="py-[1vh]">{title}</h1>
-				{@html DOMPurify.sanitize(
-					marked.parse(content.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, ''))
-				)}
+			<div class="h-full w-full max-w-full flex items-center overflow-auto">
+				<textarea name="content" id="content" placeholder="Enter your content here (Markdown supported)" class="placeholder:text-black/60 resize-none text-[1.6vh] bg-[#d6d1b7] focus-visible:outline-none h-full w-1/2 px-[5vh] border-r-[0.3vh] border-black" bind:value={content} />
+				<div class="overflow-auto prose prose-neutral lg:prose-xl prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black h-full w-1/2 max-w-full px-[5vh] pb-[5vh]">
+					<img src="" alt="" id="banner-uploaded" />
+					{@html DOMPurify.sanitize(
+						marked.parse(content.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, ''))
+					)}
+				</div>	
 			</div>
 		</div>
 
-		<div class="h-[8vh] w-full border-t-2 border-black flex justify-end items-center pr-[1.5vh]">
+		<div class="h-[8vh] w-full border-t-2 border-black flex justify-between items-center px-[1.5vh]">
+			<div>
+				<label for="picture" class="custom-picture"> Choose a banner for your post </label>
+				<input id="picture" name="picture" accept="image/*" type="file" on:change={test} />
+			</div>
 			<button type="submit">Post</button>
 		</div>
 
@@ -143,8 +146,9 @@
 	.custom-picture {
 		border: 2px solid #000;
 		display: inline-block;
-		padding: 6px 12px;
+		padding: 1.2vh 3vh;
 		cursor: pointer;
+		font-size: 2vh;
 		transition: background-color 0.15s ease, color 0.15s ease;
 	}
 
@@ -158,12 +162,6 @@
 		background-color: #d6d1b7;
 		color: #000;
 		cursor: pointer;
-	}
-
-	#file-upload-pos {
-		position: absolute;
-		top: 1vh;
-		left: 1vh;
 	}
 
 	#banner-uploaded {
