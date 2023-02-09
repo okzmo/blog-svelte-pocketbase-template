@@ -1,7 +1,7 @@
 <script>
-    import { onMount } from 'svelte';
-    import toast, { Toaster } from 'svelte-french-toast';
+    import { Toaster } from 'svelte-french-toast';
+	import '../app.postcss';
 </script>
     
-    <Toaster />
+<Toaster />
 <slot />

@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
 	import { currentUser, pb } from '$lib/pocketbase';
-	import '../app.postcss';
+	import { each } from 'svelte/internal';
 
 	export let data: any;
-	console.log(data.posts);
+	console.log(data.posts[1].content.split(' ').slice(0, 40).join(' '));
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
@@ -30,26 +30,24 @@
 				{#if data.posts.length === 0}
 					<h1>NO POST AVAILABLE</h1>
 				{:else}
+					{#each data.posts as post}
 					<div class="flex flex-col border-b-[0.5vh] border-black h-fit lg:h-full">
 						<div class="h-fit sm:h-[90%]">
 							<img
-								src={`http://127.0.0.1:8090/api/files/${data.posts[5].collectionId}/${data.posts[5].id}/${data.posts[5].picture}`}
+								src={`http://127.0.0.1:8090/api/files/${post.collectionId}/${post.id}/${post.picture}`}
 								alt=""
 								class="h-[40vh] lg:h-[38vh] w-full mb-5 lg:mb-[1.4vh] px-4 pt-4 lg:px-[1.2vw] lg:pt-[1.2vw]"
 							/>
 							<div class="px-5 pb-5 lg:px-[1.2vw] lg:pb-[1.2vw]">
 								<h2 class="text-3xl md:text-[3.5vw] lg:leading-[3vw] mb-4 lg:mb-[1.2vh] font-bold">
-									What's new in TailwindCSS V2
+									{post.title}
 								</h2>
 								<span class="flex justify-between mb-3 lg:mb-[1vh]">
-									<p class="md:text-[0.86vw]">By <span class="font-bold">Mathieu Rossi</span></p>
+									<p class="md:text-[0.86vw]">By <span class="font-bold">{post.author}</span></p>
 									<p class="md:text-[0.86vw]">5 min Read</p>
 								</span>
 								<p class="text-md lg:text-[1.73vw] xl:text-[2.4vh] font-regular">
-									Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur sapiente
-									reiciendis voluptatum assumenda, quae iure! Placeat neque corporis asperiores
-									ducimus non nam facilis reprehenderit, tempore, commodi, iste nostrum a
-									distinctio!
+									{post.content.split(' ').slice(0, 36).join(' ')}
 								</p>
 							</div>
 						</div>
@@ -59,36 +57,9 @@
 							<a href="/article" class="text-[2.2vh] px-[1.2vw]">Read More</a>
 						</div>
 					</div>
+					
+					{/each}
 				{/if}
-
-				<div class="flex flex-col border-b-[0.5vh] border-black h-fit lg:h-full">
-					<div class="h-fit sm:h-[90%]">
-						<img
-							src="https://images.unsplash.com/photo-1675430420657-72694b2f66be?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format"
-							alt=""
-							class="h-[40vh] lg:h-[38vh] w-full mb-5 lg:mb-[1.4vh] px-4 pt-4 lg:px-[1.2vw] lg:pt-[1.2vw]"
-						/>
-						<div class="px-5 pb-5 lg:px-[1.2vw] lg:pb-[1.2vw]">
-							<h2 class="text-3xl md:text-[3.5vw] lg:leading-[3vw] mb-4 lg:mb-[1.2vh] font-bold">
-								What's new in TailwindCSS V2
-							</h2>
-							<span class="flex justify-between mb-3 lg:mb-[1vh]">
-								<p class="md:text-[0.86vw]">By <span class="font-bold">Mathieu Rossi</span></p>
-								<p class="md:text-[0.86vw]">5 min Read</p>
-							</span>
-							<p class="text-md lg:text-[1.2vw] font-regular">
-								Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consectetur sapiente
-								reiciendis voluptatum assumenda, quae iure! Placeat neque corporis asperiores
-								ducimus non nam facilis reprehenderit, tempore, commodi, iste nostrum a distinctio!
-							</p>
-						</div>
-					</div>
-					<div
-						class="hidden lg:flex justify-end items-center border-t-[0.5vh] border-black h-[10%]"
-					>
-						<a href="/article" class="text-[2.2vh] px-[1.2vw]">Read More</a>
-					</div>
-				</div>
 			</div>
 		</div>
 	</section>

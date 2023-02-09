@@ -27,7 +27,8 @@
 
 	marked.use({ renderer });
 
-	let string = '';
+	let title = '';
+	let content = '';
 
 	const author = $currentUser?.name;
 
@@ -54,11 +55,11 @@
 	/>
 </svelte:head>
 
-<div class="container">
+<div class="w-screen h-full">
 	<form
 		action=""
 		method="POST"
-		class="markdownContainer"
+		class="h-[92vh]"
 		enctype="multipart/form-data"
 		use:enhance={() => {
 			return async ({ result, update }) => {
@@ -84,21 +85,25 @@
 			};
 		}}
 	>
-		<div class="post">
-			<textarea name="content" id="content" class="markdown" bind:value={string} />
-			<div class="preview">
+		<div class="flex w-full h-full items-center">
+			<div class="w-1/2 h-full border-r-[0.3vh] border-black flex flex-col p-[5vh]">
+				<input type="text" name="title" id="title" placeholder="Enter your title here" class="py-[1vh] text-[4vh] font-black text-black placeholder:text-black/70 bg-[#d6d1b7] focus-visible:outline-none leading-none mb-[4vh]" bind:value={title}  autocomplete="off"/>
+				<textarea name="content" id="content" placeholder="Enter your content here (Markdown supported)" class="placeholder:text-black/60 resize-none text-[1.6vh] overflow-auto bg-[#d6d1b7] focus-visible:outline-none h-full" bind:value={content} />
+			</div>
+			<div class="w-1/2 h-full resize-none p-[5vh] overflow-auto relative prose prose-neutral max-w-full">
 				<div id="file-upload-pos">
 					<label for="picture" class="custom-picture"> Choose a banner for your post </label>
 					<input id="picture" name="picture" accept="image/*" type="file" on:change={test} />
 				</div>
 				<img src="" alt="" id="banner-uploaded" />
+				<h1 class="py-[1vh]">{title}</h1>
 				{@html DOMPurify.sanitize(
-					marked.parse(string.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, ''))
+					marked.parse(content.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, ''))
 				)}
 			</div>
 		</div>
 
-		<div class="send">
+		<div class="h-[8vh] w-full border-t-2 border-black flex justify-end items-center pr-[1.5vh]">
 			<button type="submit">Post</button>
 		</div>
 
@@ -107,38 +112,9 @@
 </div>
 
 <style>
-	.container {
+
+	:global(body) {
 		background-color: #d6d1b7;
-		height: 100vh;
-		width: 100vw;
-		display: flex;
-		font-family: 'Outfit';
-		flex-direction: column;
-	}
-
-	.markdownContainer {
-		height: 92vh;
-	}
-
-	.post {
-		display: flex;
-		width: 100%;
-		height: 100%;
-	}
-
-	:global(*) {
-		margin: 0;
-		box-sizing: border-box;
-	}
-
-	.send {
-		height: 8vh;
-		width: 100%;
-		border-top: 2px solid black;
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-		padding: 0 1.5vh;
 	}
 
 	button {
@@ -159,30 +135,6 @@
 		background-color: #d6d1b7;
 		color: #000;
 		cursor: pointer;
-	}
-
-	.markdown {
-		width: 50%;
-		height: 100%;
-		resize: none;
-		background-color: #d6d1b7;
-		border: none;
-		border-right: 2px solid black;
-		padding: 5vh;
-		font-size: 1.6vh;
-		overflow: auto;
-	}
-
-	.preview {
-		width: 50%;
-		height: 100%;
-		resize: none;
-		background-color: #d6d1b7;
-		border: none;
-		font-size: 1.6vh;
-		padding: 5vh;
-		overflow: auto;
-		position: relative;
 	}
 
 	input[type='file'] {

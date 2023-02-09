@@ -12,11 +12,12 @@ const imageTypes = [
 ]
 
 const postSchema = z.object({
+	author: z.string({ required_error: 'You need to be connected.' }),
+	title: z.string({ required_error: 'Your must have a title to post this article.' }).max(48, {message: 'Your title must be less than 48 characters.'}).trim(),
 	content: z
-		.string({ required_error: 'Your post need content to be posted.' })
+		.string({ required_error: 'Your must have content to post this article.' })
 		.min(64, { message: 'Your post must be at least 64 characters.' })
 		.trim(),
-	author: z.string({ required_error: 'You need to be connected.' }),
 	picture: z.instanceof(Blob).superRefine((val, ctx) => {
 		if(val) {
 			if(val.size === 0) {
