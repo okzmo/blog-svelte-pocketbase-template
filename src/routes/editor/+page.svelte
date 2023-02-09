@@ -3,7 +3,7 @@
 	import { marked } from 'marked';
 	import { pb } from '$lib/pocketbase';
 	import { currentUser } from '$lib/pocketbase';
-	import type { postType } from '../../types/types';
+	import type { postErrorType } from '../../types/types';
 	import DOMPurify from 'isomorphic-dompurify';
 	import toast from 'svelte-french-toast';
 	import { update } from 'svelte-french-toast/core/store';
@@ -45,7 +45,7 @@
 		reader.readAsDataURL(file);
 	}
 
-	export let form: postType;
+	export let form: postErrorType;
 </script>
 
 <svelte:head>
@@ -86,9 +86,9 @@
 		}}
 	>
 		<div class="flex w-full h-full items-center">
-			<div class="w-1/2 h-full border-r-[0.3vh] border-black flex flex-col p-[5vh]">
-				<input type="text" name="title" id="title" placeholder="Enter your title here" class="py-[1vh] text-[4vh] font-black text-black placeholder:text-black/70 bg-[#d6d1b7] focus-visible:outline-none leading-none mb-[4vh]" bind:value={title}  autocomplete="off"/>
-				<textarea name="content" id="content" placeholder="Enter your content here (Markdown supported)" class="placeholder:text-black/60 resize-none text-[1.6vh] overflow-auto bg-[#d6d1b7] focus-visible:outline-none h-full" bind:value={content} />
+			<div class="w-1/2 h-full border-r-[0.3vh] border-black flex flex-col pt-[5vh] overflow-auto">
+				<input type="text" name="title" id="title" placeholder="Enter your title here" class="py-[1vh] text-[4vh] font-black text-black placeholder:text-black/70 bg-[#d6d1b7] focus-visible:outline-none leading-none mb-[4vh]  px-[5vh]" bind:value={title}  autocomplete="off"/>
+				<textarea name="content" id="content" placeholder="Enter your content here (Markdown supported)" class="placeholder:text-black/60 resize-none text-[1.6vh] bg-[#d6d1b7] focus-visible:outline-none h-full  px-[5vh]" bind:value={content} />
 			</div>
 			<div class="w-1/2 h-full resize-none p-[5vh] overflow-auto relative prose prose-neutral max-w-full">
 				<div id="file-upload-pos">

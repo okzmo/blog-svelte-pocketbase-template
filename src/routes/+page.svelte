@@ -2,9 +2,9 @@
 	import { applyAction, enhance } from '$app/forms';
 	import { currentUser, pb } from '$lib/pocketbase';
 	import { each } from 'svelte/internal';
+	import Post from '../components/Post.svelte';
 
 	export let data: any;
-	console.log(data.posts[1].content.split(' ').slice(0, 40).join(' '));
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
@@ -31,32 +31,7 @@
 					<h1>NO POST AVAILABLE</h1>
 				{:else}
 					{#each data.posts as post}
-					<div class="flex flex-col border-b-[0.5vh] border-black h-fit lg:h-full">
-						<div class="h-fit sm:h-[90%]">
-							<img
-								src={`http://127.0.0.1:8090/api/files/${post.collectionId}/${post.id}/${post.picture}`}
-								alt=""
-								class="h-[40vh] lg:h-[38vh] w-full mb-5 lg:mb-[1.4vh] px-4 pt-4 lg:px-[1.2vw] lg:pt-[1.2vw]"
-							/>
-							<div class="px-5 pb-5 lg:px-[1.2vw] lg:pb-[1.2vw]">
-								<h2 class="text-3xl md:text-[3.5vw] lg:leading-[3vw] mb-4 lg:mb-[1.2vh] font-bold">
-									{post.title}
-								</h2>
-								<span class="flex justify-between mb-3 lg:mb-[1vh]">
-									<p class="md:text-[0.86vw]">By <span class="font-bold">{post.author}</span></p>
-									<p class="md:text-[0.86vw]">5 min Read</p>
-								</span>
-								<p class="text-md lg:text-[1.73vw] xl:text-[2.4vh] font-regular">
-									{post.content.split(' ').slice(0, 36).join(' ')}
-								</p>
-							</div>
-						</div>
-						<div
-							class="hidden lg:flex justify-end items-center border-t-[0.5vh] border-black h-[10%]"
-						>
-							<a href="/article" class="text-[2.2vh] px-[1.2vw]">Read More</a>
-						</div>
-					</div>
+						<Post {post}/>
 					
 					{/each}
 				{/if}
@@ -96,10 +71,10 @@
 		<div class="h-fit lg:h-[30vh] flex flex-col pt-6 border-b-[0.5vh] border-black justify-between">
 			<div class="bg-black text-[#d6d1b7] text-[3vh] py-[0.5vh] whitespace-nowrap hidden lg:flex">
 				<div class="txt ">
-					New Article - New Article - New Article - New Article - New Article - New Article -&nbsp;
+					Have a good day - Have a good day - Have a good day - Have a good day -&nbsp;
 				</div>
 				<div class="txt">
-					New Article - New Article - New Article - New Article - New Article - New Article -&nbsp;
+					Have a good day - Have a good day - Have a good day - Have a good day -&nbsp;
 				</div>
 			</div>
 			<h3>Latest Projects</h3>
