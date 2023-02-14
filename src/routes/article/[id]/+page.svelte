@@ -3,7 +3,6 @@
     import { marked } from 'marked';
 
 	export let data: any;
-	console.log(data);
 
 	const post = data.post;
 </script>
@@ -20,7 +19,7 @@
 			/>
 			<h1 class="absolute bottom-3.5 left-3.5 text-3xl font-bold text-white">{post.title}</h1>
 		</div>
-        <p class="prose prose-neutral prose-xl prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black prose-h2:mt-3 prose-code:h-20 overflow-auto h-fit py-[5vh] px-[8vh] max-w-full">
+        <p class="prose prose-neutral lg:prose-xl prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black prose-h2:mt-3 prose-code:h-20 overflow-auto h-fit py-[2.5vh] lg:py-[5vh] px-[3vh] lg:px-[8vh] max-w-full">
             {@html marked.parse(post.content)}
         </p>
 	</section>

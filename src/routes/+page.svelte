@@ -22,10 +22,10 @@
 			</h1>
 		</div>
 		<div class="h-fit lg:h-[85vh] flex">
-			<div class="hidden w-1/3 border-r-[0.5vh] border-black lg:flex items-end justify-center">
+			<div class="hidden w-1/3 border-r-[0.5vh] border-black xl:flex items-end justify-center">
 				<p class="md:text-[4.5vw] font-bold">ART.01</p>
 			</div>
-			<div class="w-full lg:w-2/3 overflow-auto">
+			<div class="w-full xl:w-2/3 overflow-auto">
 				{#if data.posts.length === 0}
 					<h1>NO POST AVAILABLE</h1>
 				{:else}

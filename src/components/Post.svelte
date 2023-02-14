@@ -27,10 +27,10 @@
 				{post.title}
 			</h2>
 			<span class="flex justify-between mb-3 lg:mb-[1vh]">
-				<p class="lg:text-[0.86vw]">By <span class="font-bold">{post.author}</span></p>
-				<p class="lg:text-[0.86vw]">{readingTime()} min Read</p>
+				<p class="xl:text-[0.86vw]">By <span class="font-bold">{post.author}</span></p>
+				<p class="xl:text-[0.86vw]">{readingTime()} min Read</p>
 			</span>
-			<p class="text-md lg:text-[1.73vw] xl:text-[2.4vh] font-regular">
+			<p class="text-md lg:text-[2.9vh] xl:text-[2.4vh] font-regular">
 				{cleanDescription(post.content.split(' ').slice(0, 36).join(' ')+'...')}
 			</p>
 		</div>
