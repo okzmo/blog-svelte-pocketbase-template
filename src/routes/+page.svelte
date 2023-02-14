@@ -31,7 +31,6 @@
 				{:else}
 					{#each data.posts as post}
 						<Post {post}/>
-					
 					{/each}
 				{/if}
 			</div>

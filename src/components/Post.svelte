@@ -34,6 +34,6 @@
 		</div>
 	</div>
 	<div class="hidden lg:flex justify-end items-center border-t-[0.5vh] border-black h-[10%]">
-		<a href="/article" class="text-[2.2vh] px-[1.2vw]">Read More</a>
+		<a href={`/article/${post.slug}-${post.id}`} class="text-[2.2vh] px-[1.2vw]">Read More</a>
 	</div>
 </div>

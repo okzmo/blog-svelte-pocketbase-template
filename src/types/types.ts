@@ -12,6 +12,7 @@ export type postType = {
 	content: string;
 	author: string;
 	title: string;
+	slug: string;
 };
 
 export type registerType = {
