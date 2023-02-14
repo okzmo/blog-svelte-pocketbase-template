@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { enhance, applyAction } from '$app/forms';
 	import { marked } from 'marked';
-	import { pb } from '$lib/pocketbase';
-	import { currentUser } from '$lib/pocketbase';
+	import { pb, currentUser } from '$lib/pocketbase';
 	import type { postErrorType } from '../../types/types';
 	import DOMPurify from 'isomorphic-dompurify';
 	import toast from 'svelte-french-toast';
-	import { update } from 'svelte-french-toast/core/store';
+	import { slugify } from '$lib/utils';
 
 	marked.setOptions({
 		renderer: new marked.Renderer(),
@@ -111,6 +110,7 @@
 		</div>
 
 		<input type="text" name="author" hidden value={author} />
+		<input type="text" name="slug" hidden value={slugify(title)} />
 	</form>
 </div>
 

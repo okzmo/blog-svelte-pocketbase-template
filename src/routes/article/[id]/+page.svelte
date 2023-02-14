@@ -1,7 +1,28 @@
-<script lang='ts'>
+<script lang="ts">
+	import LatestProjects from '../../../components/LatestProjects.svelte';
+    import { marked } from 'marked';
 
-    export let data: any;
-    console.log(data);
+	export let data: any;
+	console.log(data);
+
+	const post = data.post;
 </script>
 
-<h1>ARticle</h1>
+<main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
+	<section
+		class="w-full lg:w-1/2 h-fit lg:h-full lg:border-r-[0.5vh] border-black flex flex-col z-[2]"
+	>
+		<div class="w-full h-1/2 relative">
+			<img
+				src={`http://127.0.0.1:8090/api/files/${post.collectionId}/${post.id}/${post.picture}`}
+				alt=""
+				class="w-full h-full object-cover"
+			/>
+			<h1 class="absolute bottom-3.5 left-3.5 text-3xl font-bold text-white">{post.title}</h1>
+		</div>
+        <p class="prose prose-neutral lg:prose-lg prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black flex flex-col overflow-auto h-fit p-[5vh] max-w-full">
+            {@html marked.parse(post.content)}
+        </p>
+	</section>
+	<LatestProjects />
+</main>

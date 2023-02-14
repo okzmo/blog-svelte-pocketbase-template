@@ -14,6 +14,7 @@ const imageTypes = [
 const postSchema = z.object({
 	author: z.string({ required_error: 'You need to be connected.' }),
 	title: z.string({ required_error: 'Your must have a title to post this article.' }).max(48, {message: 'Your title must be less than 48 characters.'}).trim(),
+	slug: z.string(),
 	content: z
 		.string({ required_error: 'Your must have content to post this article.' })
 		.min(64, { message: 'Your post must be at least 64 characters.' })
