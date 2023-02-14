@@ -19,23 +19,23 @@
                     };
                 }}
             >
-                <button>Log Out</button>
+                <button class="border-[0.5vh] border-black px-8 py-3 lg:px-[2.2vw] lg:py-[1.2vh] text-sm lg:text-[0.8vw] lg:leading-[2vh] hover:bg-black hover:text-[#9fa8b6] transition">Log Out</button>
             </form>
         {:else}
             <a
                 href="/login"
-                class="border-[0.5vh] border-black bg-black text-[#d6d1b7] px-8 py-3 lg:px-[2.2vw] lg:py-[1.2vh] text-sm lg:text-[0.8vw] lg:leading-[2vh] hover:bg-[#d6d1b7] hover:text-black transition"
+                class="border-[0.5vh] border-black bg-black text-[#9fa8b6] px-8 py-3 lg:px-[2.2vw] lg:py-[1.2vh] text-sm lg:text-[0.8vw] lg:leading-[2vh] hover:bg-[#9fa8b6] hover:text-black transition"
                 >LOGIN</a
             >
             <a
                 href="/register"
-                class="border-[0.5vh] border-black px-8 py-3 lg:px-[2.2vw] lg:py-[1.2vh] text-sm lg:text-[0.8vw] lg:leading-[2vh] hover:bg-black hover:text-[#d6d1b7] transition"
+                class="border-[0.5vh] border-black px-8 py-3 lg:px-[2.2vw] lg:py-[1.2vh] text-sm lg:text-[0.8vw] lg:leading-[2vh] hover:bg-black hover:text-[#9fa8b6] transition"
                 >REGISTER</a
             >
         {/if}
     </div>
     <div class="h-fit lg:h-[30vh] flex flex-col pt-6 border-b-[0.5vh] border-black justify-between">
-        <div class="bg-black text-[#d6d1b7] text-[3vh] py-[0.5vh] whitespace-nowrap hidden lg:flex">
+        <div class="bg-black text-[#9fa8b6] text-[3vh] py-[0.5vh] whitespace-nowrap hidden lg:flex">
             <div class="txt ">
                 Have a good day - Have a good day - Have a good day - Have a good day -&nbsp;
             </div>

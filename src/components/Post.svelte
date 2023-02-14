@@ -1,5 +1,7 @@
 <script lang="ts">
 	import type { postType } from '../types/types';
+	import { marked } from 'marked';
+	import { cleanDescription } from '$lib/utils';
 
 	export let post: postType;
 
@@ -21,7 +23,7 @@
 			class="h-[40vh] lg:h-[38vh] w-full mb-5 lg:mb-[1.4vh] px-4 pt-4 lg:px-[1.2vw] lg:pt-[1.2vw]"
 		/>
 		<div class="px-5 pb-5 lg:px-[1.2vw] lg:pb-[1.2vw]">
-			<h2 class="text-3xl md:text-[3.5vw] lg:leading-[3vw] mb-4 lg:mb-[1.2vh] font-bold">
+			<h2 class="text-3xl md:text-[3vw] lg:leading-[3vw] mb-4 lg:mb-[1.2vh] font-bold">
 				{post.title}
 			</h2>
 			<span class="flex justify-between mb-3 lg:mb-[1vh]">
@@ -29,7 +31,7 @@
 				<p class="lg:text-[0.86vw]">{readingTime()} min Read</p>
 			</span>
 			<p class="text-md lg:text-[1.73vw] xl:text-[2.4vh] font-regular">
-				{post.content.split(' ').slice(0, 36).join(' ')+'...'}
+				{cleanDescription(post.content.split(' ').slice(0, 36).join(' ')+'...')}
 			</p>
 		</div>
 	</div>

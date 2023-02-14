@@ -87,12 +87,12 @@
 		<div class="w-full h-full flex flex-col items-center">
 			
 			<div class="flex w-full h-fit prose max-w-full items-center">
-				<input type="text" name="title" id="title" placeholder="Enter your title here" class="text-4xl font-black text-black placeholder:text-black/70 bg-[#d6d1b7] focus-visible:outline-none w-1/2 p-[5vh] border-r-[0.3vh] border-black" bind:value={title}  autocomplete="off"/>
-				<h1 class="w-1/2 p-[5vh]">{title}</h1>
+				<input type="text" name="title" id="title" placeholder="Enter your title here" class="text-4xl font-black text-black placeholder:text-black/70 bg-[#9fa8b6] focus-visible:outline-none w-1/2 p-[5vh]" bind:value={title}  autocomplete="off"/>
+				<h1 class="w-1/2 p-[5vh] h-full border-l-[0.3vh] border-black">{title}</h1>
 			</div>
 			<div class="h-full w-full max-w-full flex items-center overflow-auto">
-				<textarea name="content" id="content" placeholder="Enter your content here (Markdown supported)" class="placeholder:text-black/60 resize-none text-[1.6vh] bg-[#d6d1b7] focus-visible:outline-none h-full w-1/2 px-[5vh] border-r-[0.3vh] border-black" bind:value={content} />
-				<div class="overflow-auto prose prose-neutral lg:prose-xl prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black h-full w-1/2 max-w-full px-[5vh] pb-[5vh]">
+				<textarea name="content" id="content" placeholder="Enter your content here (Markdown supported)" class="placeholder:text-black/60 resize-none text-[1.6vh] bg-[#9fa8b6] focus-visible:outline-none h-full w-1/2 px-[5vh]" bind:value={content} />
+				<div class="overflow-auto prose prose-neutral lg:prose-xl prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black h-full w-1/2 max-w-full px-[5vh] pb-[5vh] border-l-[0.3vh] border-black">
 					<img src="" alt="" id="banner-uploaded" />
 					{@html DOMPurify.sanitize(
 						marked.parse(content.replace(/^[\u200B\u200C\u200D\u200E\u200F\uFEFF]/, ''))
@@ -117,12 +117,12 @@
 <style>
 
 	:global(body) {
-		background-color: #d6d1b7;
+		background-color: #9fa8b6;
 	}
 
 	button {
 		padding: 1.2vh 3vh;
-		background-color: #d6d1b7;
+		background-color: #9fa8b6;
 		border: 2px solid black;
 		transition: background-color 0.15s ease;
 		font-size: 2vh;
@@ -130,12 +130,12 @@
 
 	button:hover {
 		background-color: black;
-		color: #d6d1b7;
+		color: #9fa8b6;
 		cursor: pointer;
 	}
 
 	button:active {
-		background-color: #d6d1b7;
+		background-color: #9fa8b6;
 		color: #000;
 		cursor: pointer;
 	}
@@ -154,12 +154,12 @@
 
 	.custom-picture:hover {
 		background-color: black;
-		color: #d6d1b7;
+		color: #9fa8b6;
 		cursor: pointer;
 	}
 
 	.custom-picture:active {
-		background-color: #d6d1b7;
+		background-color: #9fa8b6;
 		color: #000;
 		cursor: pointer;
 	}

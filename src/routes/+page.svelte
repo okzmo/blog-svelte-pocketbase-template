@@ -11,9 +11,9 @@
 		class="w-full lg:w-1/2 h-fit lg:h-full lg:border-r-[0.5vh] border-black flex flex-col z-[2]"
 	>
 		<div
-			class="h-fit lg:h-[15vh] border-b-[0.5vh] border-black flex justify-center lg:justify-start items-center bg-[#d6d1b7]"
+			class="h-fit lg:h-[15vh] border-b-[0.5vh] border-black flex justify-center lg:justify-start items-center bg-[rgb(124, 138, 160)]"
 		>
-			<h1 class="text-[13vw] md:text-[10vw] lg:text-[5vw] lg:pl-[2.5vh] font-bold z-[2]">
+			<h1 class="text-[12vw] md:text-[10vw] lg:text-[5vw] lg:pl-[2.5vh] font-bold z-[2]">
 				{#if $currentUser}
 					Hey, {$currentUser.username}
 				{:else}
@@ -40,11 +40,6 @@
 </main>
 
 <style>
-	:global(body) {
-		background-color: rgb(214, 209, 183);
-	}
-
-	
 
 	::-webkit-scrollbar {
 		width: 5px; /* for vertical scrollbars */
