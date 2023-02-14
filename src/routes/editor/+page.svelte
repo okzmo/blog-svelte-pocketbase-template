@@ -29,7 +29,7 @@
 	let title = '';
 	let content = '';
 
-	const author = $currentUser?.name;
+	const author = $currentUser?.name.length > 0 ? $currentUser?.name : $currentUser?.username;
 
 	function test(e: Event) {
 		const target = e.currentTarget as HTMLInputElement;

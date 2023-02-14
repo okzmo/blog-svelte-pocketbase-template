@@ -38,5 +38,7 @@
 		<label for="passwordConfirm">Verify password</label>
 		<input type="password" name="passwordConfirm" class="w-2/3 mb-4 p-2" value="" />
 		<button type="submit" class="w-1/5 rounded-md bg-slate-500 p-2">Login</button>
+	
+		<input type="text" name="role" id="role" value='user' hidden />
 	</form>
 </div>
