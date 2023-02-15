@@ -17,11 +17,7 @@
 			class="h-fit lg:h-[15vh] border-b-[0.5vh] border-black flex justify-center lg:justify-start items-center bg-[rgb(124, 138, 160)]"
 		>
 			<h1 class="text-[12vw] md:text-[10vw] lg:text-[5vw] lg:pl-[2.5vh] font-bold z-[2]">
-				{#if $currentUser}
-					Hey, {$currentUser.username}
-				{:else}
-					HELLO, THERE!
-				{/if}
+				HELLO, THERE!
 			</h1>
 		</div>
 		<div class="h-fit lg:h-[85vh] flex">

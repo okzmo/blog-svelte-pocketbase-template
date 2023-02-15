@@ -5,7 +5,7 @@ export type postErrorType = {
 	};
 };
 
-export type Project = {
+export type Repo = {
 	name: string;
 	html_url: string;
 	stargazers_count: number;
