@@ -4,7 +4,7 @@
 	import LatestProjects from '../components/LatestProjects.svelte';
 
 	export let data: any;
-	console.log(data);
+	const projects = data.user;
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
@@ -31,13 +31,13 @@
 					<h1>NO POST AVAILABLE</h1>
 				{:else}
 					{#each data.posts as post}
-						<Post {post}/>
+						<Post {post} />
 					{/each}
 				{/if}
 			</div>
 		</div>
 	</section>
-	<LatestProjects />
+	<LatestProjects {projects}/>
 </main>
 
 <style>

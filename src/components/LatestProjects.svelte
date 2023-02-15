@@ -2,6 +2,8 @@
     import { applyAction, enhance } from '$app/forms';
     import { pb, currentUser } from '$lib/pocketbase';
 
+    export let projects: Array<Object>;
+    console.log(projects);
 </script>
 
 <section class="w-full lg:w-1/2 flex flex-col">
@@ -46,18 +48,14 @@
                 Have a good day - Have a good day - Have a good day - Have a good day -&nbsp;
             </div>
         </div>
-        <h3>Latest Projects</h3>
+        <h3 class="text-[3.5vh] pl-[1vh] pb-[0.5vh]">GitHub Repositories</h3>
     </div>
-    <div class="lg:h-[62vh]">
-        <h2>How did I make this blog using Svelte and Pocketbase</h2>
-        <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error velit sint, officiis atque
-            impedit quae.
-        </p>
-        <div>
-            <p>12.06.2023</p>
-            <p>12 views</p>
-        </div>
+    <div class="lg:h-[62vh] overflow-auto">
+        {#each projects as project}
+            <div class="w-full h-[3vh] border-b-[0.5vh] border-black py-[4vh] pl-[3vh] flex items-center text-[2vh]">
+                {project.name}
+            </div>
+        {/each}
     </div>
 </section>
 
