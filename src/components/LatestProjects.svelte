@@ -1,9 +1,9 @@
 <script lang='ts'>
     import { applyAction, enhance } from '$app/forms';
     import { pb, currentUser } from '$lib/pocketbase';
+    import type { Repo } from '../types/types';
 
-    export let projects: Array<Object>;
-    console.log(projects);
+    export let userRepos: Array<Repo>;
 </script>
 
 <section class="w-full lg:w-1/2 flex flex-col">
@@ -51,13 +51,13 @@
         <h3 class="text-[3.5vh] pl-[1vh] pb-[0.5vh]">GitHub Repositories</h3>
     </div>
     <div class="lg:h-[62vh] overflow-auto">
-        {#each projects as project}
-            <a href={project.html_url} target='_blank' rel="noreferrer" class="w-full h-fit border-b-[0.5vh] border-black py-[3.5vh] px-[3vh] flex items-center text-[2vh] justify-between relative repo hover:text-[#9fa8b6] transition">
+        {#each userRepos as repo}
+            <a href={repo.html_url} target='_blank' rel="noreferrer" class="w-full h-fit border-b-[0.5vh] border-black py-[3.5vh] px-[3vh] flex items-center text-[2vh] justify-between relative repo hover:text-[#9fa8b6] transition">
                 <span>
-                    <p class="text-[2.5vh]">{project.name}</p>
-                    <p class="text-[1.6vh] w-[30vw]">{project.description}</p>
+                    <p class="text-[2.5vh]">{repo.name}</p>
+                    <p class="text-[1.6vh] w-[30vw]">{repo.description}</p>
                 </span>
-                <span>{project.stargazers_count} Stars</span>
+                <span>{repo.stargazers_count} Stars</span>
             </a>
         {/each}
     </div>

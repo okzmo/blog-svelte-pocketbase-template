@@ -1,10 +1,11 @@
 <script lang="ts">
 	import LatestProjects from '../../../components/LatestProjects.svelte';
     import { marked } from 'marked';
+	import type { postType, Repo } from '../../../types/types';
 
 	export let data: any;
-
-	const post = data.post;
+	const userRepos: Repo[] = data.userRepos;
+	const post: postType = data.post;
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
@@ -23,5 +24,5 @@
             {@html marked.parse(post.content)}
         </p>
 	</section>
-	<LatestProjects />
+	<LatestProjects {userRepos}/>
 </main>

@@ -5,6 +5,13 @@ export type postErrorType = {
 	};
 };
 
+export type Project = {
+	name: string;
+	html_url: string;
+	stargazers_count: number;
+	description: string;
+}
+
 export type postType = {
     collectionId: string;
     id: string;

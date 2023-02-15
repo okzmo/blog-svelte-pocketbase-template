@@ -2,9 +2,11 @@
 	import { currentUser } from '$lib/pocketbase';
 	import Post from '../components/Post.svelte';
 	import LatestProjects from '../components/LatestProjects.svelte';
+	import type { postType, Repo } from '../types/types';
 
 	export let data: any;
-	const projects = data.user;
+	const posts: postType[] = data.posts;
+	const userRepos: Repo[] = data.userRepos;
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
@@ -27,17 +29,17 @@
 				<p class="md:text-[4.5vw] font-bold">ART.01</p>
 			</div>
 			<div class="w-full xl:w-2/3 overflow-auto">
-				{#if data.posts.length === 0}
+				{#if posts.length === 0}
 					<h1>NO POST AVAILABLE</h1>
 				{:else}
-					{#each data.posts as post}
+					{#each posts as post}
 						<Post {post} />
 					{/each}
 				{/if}
 			</div>
 		</div>
 	</section>
-	<LatestProjects {projects}/>
+	<LatestProjects {userRepos}/>
 </main>
 
 <style>
