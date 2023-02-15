@@ -4,6 +4,7 @@
 	import LatestProjects from '../components/LatestProjects.svelte';
 
 	export let data: any;
+	console.log(data);
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
