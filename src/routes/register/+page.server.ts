@@ -1,6 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions } from './$types';
 import { z } from 'zod';
+import { cleanUsername } from '$lib/utils';
 
 const registerSchema = z
 	.object({
@@ -43,6 +44,8 @@ export const actions: Actions = {
 		const data = Object.fromEntries(await request.formData());
 
 		try {
+			data.username = cleanUsername(Object.values(data)[1]);
+			console.log(data);
 			const result = registerSchema.parse(data);
 
 			await locals.pb.collection('users').create(result);

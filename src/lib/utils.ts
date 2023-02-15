@@ -52,3 +52,14 @@ export const cleanDescription = (str: string) => {
 
 	return str;
 };
+
+export const cleanUsername = (str: FormDataEntryValue) => {
+
+	// Remove invalid chars
+	if(str instanceof String) {
+		str = str
+			.replace(/[^a-zA-Z0-9-_$!?=]/g, '')
+	}
+
+	return str;
+};

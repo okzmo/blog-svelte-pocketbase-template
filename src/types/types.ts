@@ -25,9 +25,13 @@ export type postType = {
 export type registerType = {
 	data: {
 		email: string;
+		username: string;
+		name: string;
 	};
 	errors: {
 		email: string;
+		username: string;
+		name: string;
 		password: string;
 		passwordConfirm: string;
 	};
