@@ -45,21 +45,15 @@ export const slugify = (str: string) => {
 };
 
 export const cleanDescription = (str: string) => {
-
 	// Remove invalid chars
-	str = str
-		.replace(/[^a-zA-Z0-9 .()$:,+!?=@&'"-]/g, '')
+	str = str.replace(/[^a-zA-Z0-9 .()$:,+!?=@&'"-]/g, '');
 
 	return str;
 };
 
-export const cleanUsername = (str: FormDataEntryValue) => {
-
+export const cleanUsername = (str: string) => {
 	// Remove invalid chars
-	if(str instanceof String) {
-		str = str
-			.replace(/[^a-zA-Z0-9-_$!?=]/g, '')
-	}
+	str = str.replace(/[^a-zA-Z0-9-_$!?=]/g, '');
 
 	return str;
 };

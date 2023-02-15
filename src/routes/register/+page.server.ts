@@ -44,8 +44,7 @@ export const actions: Actions = {
 		const data = Object.fromEntries(await request.formData());
 
 		try {
-			data.username = cleanUsername(Object.values(data)[1]);
-			console.log(data);
+			data.username = cleanUsername(Object.values(data)[1] as string);
 			const result = registerSchema.parse(data);
 
 			await locals.pb.collection('users').create(result);
