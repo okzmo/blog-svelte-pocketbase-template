@@ -46,7 +46,7 @@ export const slugify = (str: string) => {
 
 export const cleanDescription = (str: string) => {
 	// Remove invalid chars
-	str = str.replace(/[^a-zA-Z0-9 .()$:,+!?=@&'"-]/g, '');
+	str = str.replace(/[^a-zA-ZÀ-ÿ0-9 .()$:,+!?=@&'"-]/g, '');
 
 	return str;
 };

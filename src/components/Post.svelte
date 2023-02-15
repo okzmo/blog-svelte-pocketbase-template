@@ -31,7 +31,7 @@
 				<p class="xl:text-[0.86vw]">{readingTime()} min Read</p>
 			</span>
 			<p class="text-md lg:text-[2.9vh] xl:text-[2.4vh] font-regular">
-				{cleanDescription(post.content.split(' ').slice(0, 36).join(' ')+'...')}
+				{cleanDescription(post.content.split(' ').slice(0, 40).join(' ')+'...')}
 			</p>
 		</div>
 	</div>
