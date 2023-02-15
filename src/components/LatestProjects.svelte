@@ -52,9 +52,13 @@
     </div>
     <div class="lg:h-[62vh] overflow-auto">
         {#each projects as project}
-            <div class="w-full h-[3vh] border-b-[0.5vh] border-black py-[4vh] pl-[3vh] flex items-center text-[2vh]">
-                {project.name}
-            </div>
+            <a href={project.html_url} target='_blank' rel="noreferrer" class="w-full h-fit border-b-[0.5vh] border-black py-[3.5vh] px-[3vh] flex items-center text-[2vh] justify-between relative repo hover:text-[#9fa8b6] transition">
+                <span>
+                    <p class="text-[2.5vh]">{project.name}</p>
+                    <p class="text-[1.6vh] w-[30vw]">{project.description}</p>
+                </span>
+                <span>{project.stargazers_count} Stars</span>
+            </a>
         {/each}
     </div>
 </section>
@@ -72,4 +76,20 @@
 			transform: translate(-100%, 0);
 		}
 	}
+
+    .repo:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 100%;
+        background-color: #000;
+        left: 0;
+        z-index: -1;
+        transition: width 0.2s ease-in-out;
+    }
+
+    .repo:hover:after {
+        width: 100%;
+        
+    }
 </style>
