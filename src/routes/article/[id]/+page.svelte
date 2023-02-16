@@ -11,9 +11,9 @@
 
 	let newComment: string;
 	let comments: any = [];
-	let unsubscribe: () => void;
 
 	onMount(async () => {
+
 		const results = await pb.collection('comments').getList(1, 50, {
 			sort: 'created',
 			expand: 'user',
@@ -53,6 +53,20 @@
 		const user = await pb.collection('users').getOne(createdComment.user);
 		createdComment.expand = { user };
 		comments = [...comments, createdComment];
+
+		
+
+		if (window.matchMedia('(max-width: 768px)').matches) {
+			const chatbox = document.querySelector('#chatbox');
+			setTimeout(() => {
+				chatbox?.scrollTo(0, chatbox.scrollHeight);
+			});
+		} else {
+			const article = document.querySelector('#article');
+			setTimeout(() => {
+				article?.scrollTo(0, article.scrollHeight);
+			});
+		}
 		//
 
 		newComment = '';
@@ -88,7 +102,7 @@
 				Comments
 			</h1>
 			<div class="w-full px-[1vh] lg:px-[2vh]">
-				<div class="h-[301px] overflow-auto lg:h-auto">
+				<div id="chatbox" class="h-[301px] overflow-auto lg:h-auto">
 					{#each comments as comment (comment.id)}
 						<div
 							class="flex flex-col gap-[0.2vh] w-full border-[0.3vh] border-black p-[2vh] mb-[2vh]"
