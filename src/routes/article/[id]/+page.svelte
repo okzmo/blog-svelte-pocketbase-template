@@ -2,7 +2,8 @@
 	import LatestProjects from '../../../components/LatestProjects.svelte';
     import { marked } from 'marked';
 	import type { postType, Repo } from '../../../types/types';
-	import { currentUser } from '$lib/pocketbase';
+	import { currentUser, pb } from '$lib/pocketbase';
+	import { enhance, applyAction } from '$app/forms';
 
 	export let data: any;
 	const userRepos: Repo[] = data.userRepos;
@@ -35,7 +36,14 @@
 					<p><span class="bg-[#848b97] px-[0.3vh] font-medium">@Jean Michel</span> pTdR T ki.</p>
 				</div>
 				{#if $currentUser}
-				<input type="text" name="comment" id="comment"  class="w-full border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] bg-transparent focus-visible:outline-none"/>
+					<form action="" method="post" use:enhance={() => {
+						return async ({ result }) => {
+							pb.authStore.loadFromCookie(document.cookie);
+							await applyAction(result);
+						};
+					}}>
+						<input type="text" name="comment" id="comment"  class="w-full border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] bg-transparent focus-visible:outline-none"/>
+					</form>
 				{/if}
 			</div>
 		</div>
