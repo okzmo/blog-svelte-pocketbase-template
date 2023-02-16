@@ -13,43 +13,40 @@
 	let newComment: string;
 	let comments: any = [];
 	let unsubscribe: () => void;
-	
+
 	onMount(async () => {
 		const results = await pb.collection('comments').getList(1, 50, {
 			sort: 'created',
-			expand: 'user',
-		})
-		
-		
+			expand: 'user'
+		});
+
 		comments = results.items;
-		console.log(comments);
-		
-		unsubscribe = pb.collection('comments').subscribe('*', async({action, record}) => {
-			if(action === 'create') {
+
+		pb.collection('comments').subscribe('*', async ({ action, record }) => {
+			if (action === 'create') {
+				const user = await pb.collection('users').getOne(record.user);
+				record.expand = { user };
 				comments = [...comments, record];
-				console.log(comments);
+				const article = document.querySelector('#article');
+				article?.scrollTo(0, article.scrollHeight);
 			}
 
 			if (action === 'delete') {
 				comments = comments.filter((c) => c.id !== record.id);
 			}
-		})
-	})
+		});
+	});
 
 	async function sendComment() {
 		const data = {
 			comment: newComment,
 			user: $currentUser?.id,
-			post: post.id,
-		}
+			post: post.id
+		};
 
-		const createdComment = await pb.collection('comments').create(data)
+		const createdComment = await pb.collection('comments').create(data);
 		newComment = '';
 	}
-
-	onDestroy(() => {
-		unsubscribe?.();
-	})
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
@@ -64,7 +61,7 @@
 			/>
 			<h1 class="absolute bottom-3.5 left-3.5 text-3xl font-bold text-white">{post.title}</h1>
 		</div>
-		<div class="flex flex-col items-center overflow-auto">
+		<div id="article" class="flex flex-col items-center overflow-auto">
 			<p
 				class="prose prose-neutral lg:prose-xl prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black prose-h2:mt-3 prose-code:h-20 h-fit py-[2.5vh] lg:py-[5vh] px-[3vh] lg:px-[8vh] max-w-full"
 			>
@@ -75,25 +72,28 @@
 					<div
 						class="flex flex-col gap-[0.2vh] w-full border-[0.3vh] border-black p-[2vh] mb-[2vh]"
 					>
-						<span class="text-[1.8vh] font-semibold">{comment.expand?.user?.name} <span class="font-normal text-[1.4vh]">@{comment.expand?.user?.username}</span></span>
+						<span class="text-[1.8vh] font-semibold"
+							>{comment.expand?.user?.name}
+							<span class="font-normal text-[1.4vh]">@{comment.expand?.user?.username}</span></span
+						>
 						<p>{comment.comment}</p>
 					</div>
 				{/each}
 				{#if $currentUser}
-					<form
-						action=""
-						on:submit|preventDefault={sendComment}
-					>
-					<div class="flex gap-[1vh]">
-						<input
-						type="text"
-						name="comment"
-						id="comment"
-						class="w-full border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] bg-transparent focus-visible:outline-none" bind:value={newComment}
-					/>
-						<button type="submit" class="border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh]">Send</button>
-					</div>
-						
+					<form action="" on:submit|preventDefault={sendComment}>
+						<div class="flex gap-[1vh]">
+							<input
+								type="text"
+								name="comment"
+								id="comment"
+								autocomplete="off"
+								class="w-full border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] bg-transparent focus-visible:outline-none"
+								bind:value={newComment}
+							/>
+							<button type="submit" class="border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh]"
+								>Send</button
+							>
+						</div>
 					</form>
 				{/if}
 			</div>
