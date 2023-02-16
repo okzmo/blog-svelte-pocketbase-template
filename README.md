@@ -1,6 +1,8 @@
 
 # ⚠️ The project is mostly finished but you might encounter some bugs so please make an issue if any.
 
+[![Watch the demo](https://img.youtube.com/vi/j6mZuQa6Xh4/maxresdefault.jpg)](https://youtu.be/j6mZuQa6Xh4)
+
 # An easy to use blog template ✒️ 
 You can use pocketbase as I've done or you can tweak the template with whatever you want to use but I'll only show how to use the blog with pocketbase.
 

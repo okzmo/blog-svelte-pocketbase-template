@@ -11,7 +11,7 @@
         class="hidden lg:flex h-[8vh] gap-2 justify-end items-center border-b-[0.5vh] border-black py-4 lg:py-[2vh] px-6 lg:px-[2vh]"
     >
         {#if $currentUser}
-            {#if $currentUser.role === 'admin' || $currentUser.role === 'editor' }
+            {#if $currentUser.role === 'admin' || $currentUser.role === 'author' }
             <a href="/editor" class="border-[0.5vh] border-black bg-black text-[#9fa8b6] px-8 py-3 lg:px-[1.2vw] lg:py-[1.2vh] text-sm lg:text-[0.8vw] lg:leading-[2vh] hover:bg-[#9fa8b6] hover:text-black transition">NEW POST</a>
             {/if}
             <form
