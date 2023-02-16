@@ -16,7 +16,8 @@
 	onMount(async () => {
 		const results = await pb.collection('comments').getList(1, 50, {
 			sort: 'created',
-			expand: 'user'
+			expand: 'user',
+			filter: `(post='${post.id}')`
 		});
 
 		comments = results.items;
