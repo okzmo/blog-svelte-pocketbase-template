@@ -48,7 +48,6 @@
 			post: post.id
 		};
 
-		
 		const createdComment = await pb.collection('comments').create(data);
 		//If you want realtime comments please comment these lines
 		const user = await pb.collection('users').getOne(createdComment.user);
@@ -73,7 +72,7 @@
 			<img
 				src={`http://127.0.0.1:8090/api/files/${post.collectionId}/${post.id}/${post.picture}`}
 				alt=""
-				class="w-full h-full object-cover"
+				class="w-full h-[250px] lg:h-full object-cover"
 			/>
 			<h1 class="absolute bottom-3.5 left-3.5 text-3xl font-bold text-white">{post.title}</h1>
 		</div>
@@ -83,18 +82,26 @@
 			>
 				{@html marked.parse(post.content)}
 			</p>
-			<div class="w-full lg:px-[8vh]">
-				{#each comments as comment (comment.id)}
-					<div
-						class="flex flex-col gap-[0.2vh] w-full border-[0.3vh] border-black p-[2vh] mb-[2vh]"
-					>
-						<span class="text-[1.8vh] font-semibold"
-							>{comment.expand?.user?.name}
-							<span class="font-normal text-[1.4vh]">@{comment.expand?.user?.username}</span></span
+			<h1
+				class="self-start border-y-[0.5vh] w-full border-black mb-[2vh] p-[2vh] text-3xl font-bold"
+			>
+				Comments
+			</h1>
+			<div class="w-full px-[1vh] lg:px-[2vh]">
+				<div class="h-[301px] overflow-auto lg:h-auto">
+					{#each comments as comment (comment.id)}
+						<div
+							class="flex flex-col gap-[0.2vh] w-full border-[0.3vh] border-black p-[2vh] mb-[2vh]"
 						>
-						<p>{comment.comment}</p>
-					</div>
-				{/each}
+							<span class="text-[1.8vh] font-semibold"
+								>{comment.expand?.user?.name}
+								<span class="font-normal text-[1.4vh]">@{comment.expand?.user?.username}</span
+								></span
+							>
+							<p>{comment.comment}</p>
+						</div>
+					{/each}
+				</div>
 				{#if $currentUser}
 					<form action="" on:submit|preventDefault={sendComment}>
 						<div class="flex gap-[1vh]">
@@ -103,7 +110,8 @@
 								name="comment"
 								id="comment"
 								autocomplete="off"
-								class="w-full border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] bg-transparent focus-visible:outline-none"
+								placeholder="Please enter a comment..."
+								class="w-full border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] bg-transparent focus-visible:outline-none placeholder:text-black/60"
 								bind:value={newComment}
 							/>
 							<button type="submit" class="border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh]"

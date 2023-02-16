@@ -48,7 +48,7 @@
                 Have a good day - Have a good day - Have a good day - Have a good day -&nbsp;
             </div>
         </div>
-        <h3 class="text-[3.5vh] pl-[1vh] pb-[0.5vh]">GitHub Repositories</h3>
+        <h3 class="text-[3.5vh] font-bold lg:font-normal p-[2vh] lg:px-[1vh] lg:py-[0.5vh] border-t-[0.5vh] border-black lg:border-t-0">GitHub Repositories</h3>
     </div>
     <div class="lg:h-[62vh] overflow-auto">
         {#each userRepos as repo}
