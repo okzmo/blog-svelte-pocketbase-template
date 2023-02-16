@@ -35,7 +35,7 @@
 			</p>
 		</div>
 	</div>
-	<div class="flex justify-end items-center border-t-[0.5vh] border-black h-14">
+	<div class="flex justify-end items-center border-t-[0.5vh] border-black lg:h-full h-14">
 		<a href={`/article/${post.slug}-${post.id}`} class="text-[2.2vh] pr-4">Read More</a>
 	</div>
 </div>

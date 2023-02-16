@@ -16,12 +16,12 @@
 	onMount(async () => {
 		const results = await pb.collection('comments').getList(1, 50, {
 			sort: 'created',
-			expand: 'user',
+			expand: 'user'
 		});
 
 		comments = results.items;
 		console.log(results);
-		console.log(comments)
+		console.log(comments);
 
 		// If you want realtime comments, uncomment those lines and comment the lines I indicated in sendComment function
 		/*pb.collection('comments').subscribe('*', async ({ action, record }) => {
@@ -44,7 +44,7 @@
 
 	async function sendComment() {
 		const data = {
-			comment: newComment,
+			comment: DOMPurify.sanitize(newComment, { USE_PROFILES: { html: false } }),
 			user: $currentUser?.id,
 			post: post.id
 		};
@@ -55,17 +55,10 @@
 		createdComment.expand = { user };
 		comments = [...comments, createdComment];
 
-		if (window.matchMedia('(max-width: 768px)').matches) {
-			const chatbox = document.querySelector('#chatbox');
-			setTimeout(() => {
-				chatbox?.scrollTo(0, chatbox.scrollHeight);
-			});
-		} else {
-			const article = document.querySelector('#article');
-			setTimeout(() => {
-				article?.scrollTo(0, article.scrollHeight);
-			});
-		}
+		const chatbox = document.querySelector('#chatbox');
+		setTimeout(() => {
+			chatbox?.scrollTo(0, chatbox.scrollHeight);
+		});
 		//
 
 		newComment = '';
@@ -101,7 +94,7 @@
 				Comments
 			</h1>
 			<div class="w-full px-[1vh] lg:px-[2vh]">
-				<div id="chatbox" class="h-[301px] overflow-auto lg:h-auto">
+				<div id="chatbox" class="h-[301px] overflow-auto lg:h-[45vh]">
 					{#each comments as comment (comment.id)}
 						<div
 							class="flex flex-col gap-[0.2vh] w-full border-[0.3vh] border-black p-[2vh] mb-[2vh]"
@@ -111,10 +104,12 @@
 								<span class="font-normal text-[1.4vh]">@{comment.expand?.user?.username}</span
 								></span
 							>
-							<p>{@html comment.comment.replace(
-								'@' + $currentUser?.username,
-								`<div style='background-color: rgba(255, 164, 3, 0.7); font-weight: bold; display: inline-block; padding: 0.15vh 1.2vh; border-radius: 0.6vh;'>@${$currentUser?.username}</div>`
-							)}</p>
+							<p>
+								{@html comment.comment.replace(
+									'@' + $currentUser?.username,
+									`<div style='background-color: rgba(255, 164, 3, 0.7); font-weight: bold; display: inline-block; padding: 0.18vh 0.8vh; border-radius: 0.6vh; margin: 0 0.3vw'>@${$currentUser?.username}</div>`
+								)}
+							</p>
 						</div>
 					{/each}
 				</div>
@@ -130,7 +125,9 @@
 								class="w-full border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] bg-transparent focus-visible:outline-none placeholder:text-black/60"
 								bind:value={newComment}
 							/>
-							<button type="submit" class="border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh]"
+							<button
+								type="submit"
+								class="border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] hover:bg-black hover:text-[#9fa8b6] transition"
 								>Send</button
 							>
 						</div>
@@ -141,3 +138,10 @@
 	</section>
 	<LatestProjects {userRepos} />
 </main>
+
+<style>
+	#chatbox::-webkit-scrollbar {
+		width: 0; /* for vertical scrollbars */
+		height: 0; /* for horizontal scrollbars */
+	}
+</style>
