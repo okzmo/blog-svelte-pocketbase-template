@@ -21,7 +21,8 @@
 
 		comments = results.items;
 
-		pb.collection('comments').subscribe('*', async ({ action, record }) => {
+		// If you want realtime comments, uncomment those lines and comment the three lines I indicate in sendComment function
+		/*pb.collection('comments').subscribe('*', async ({ action, record }) => {
 			if (action === 'create') {
 				const user = await pb.collection('users').getOne(record.user);
 				record.expand = { user };
@@ -36,7 +37,7 @@
 			if (action === 'delete') {
 				comments = comments.filter((c: commentType) => c.id !== record.id);
 			}
-		});
+		});*/
 	});
 
 	async function sendComment() {
@@ -46,7 +47,15 @@
 			post: post.id
 		};
 
+		
 		const createdComment = await pb.collection('comments').create(data);
+		// If you want realtime comments please comment these lines
+		const user = await pb.collection('users').getOne(createdComment.user);
+		createdComment.expand = { user };
+		console.log(createdComment);
+		//
+
+		comments = [...comments, createdComment];
 		newComment = '';
 	}
 </script>
