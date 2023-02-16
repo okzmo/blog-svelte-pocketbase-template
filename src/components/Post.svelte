@@ -16,7 +16,7 @@
 </script>
 
 <div class="flex flex-col border-b-[0.5vh] border-black h-fit lg:h-full">
-	<div class="h-fit sm:h-[90%]">
+	<div class="h-[90%]">
 		<img
 			src={`http://127.0.0.1:8090/api/files/${post.collectionId}/${post.id}/${post.picture}`}
 			alt=""
@@ -35,7 +35,7 @@
 			</p>
 		</div>
 	</div>
-	<div class="flex justify-end items-center border-t-[0.5vh] border-black lg:h-full h-14">
+	<div class="flex justify-end items-center border-t-[0.5vh] border-black lg:h-[10%] h-14">
 		<a href={`/article/${post.slug}-${post.id}`} class="text-[2.2vh] pr-4">Read More</a>
 	</div>
 </div>
