@@ -24,7 +24,9 @@ export const load = (async ({ locals }) => {
 
     const fetchPosts = async () => {
         try {
-            const records = structuredClone(await locals.pb.collection('posts').getFullList())
+            const records = structuredClone(await locals.pb.collection('posts').getFullList(50, {
+                sort: '-created', 
+            }))
             return records;
         } catch(err) {
             console.log('Error: ', err);
