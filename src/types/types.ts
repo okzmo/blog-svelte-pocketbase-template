@@ -36,3 +36,14 @@ export type registerType = {
 		passwordConfirm: string;
 	};
 };
+
+export type commentType = {
+	id: string;
+	comment: string;
+	expand: {
+		user : {
+			name: string;
+			username: string;
+		}
+	}
+};

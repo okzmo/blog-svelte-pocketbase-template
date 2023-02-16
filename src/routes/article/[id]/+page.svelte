@@ -1,9 +1,8 @@
 <script lang="ts">
 	import LatestProjects from '../../../components/LatestProjects.svelte';
 	import { marked } from 'marked';
-	import type { postType, Repo } from '../../../types/types';
+	import type { commentType, postType, Repo } from '../../../types/types';
 	import { currentUser, pb } from '$lib/pocketbase';
-	import { enhance, applyAction } from '$app/forms';
 	import { onMount, onDestroy } from 'svelte';
 
 	export let data: any;
@@ -27,12 +26,15 @@
 				const user = await pb.collection('users').getOne(record.user);
 				record.expand = { user };
 				comments = [...comments, record];
+
 				const article = document.querySelector('#article');
-				article?.scrollTo(0, article.scrollHeight);
+				setTimeout(() => {
+					article?.scrollTo(0, article.scrollHeight);
+				})
 			}
 
 			if (action === 'delete') {
-				comments = comments.filter((c) => c.id !== record.id);
+				comments = comments.filter((c: commentType) => c.id !== record.id);
 			}
 		});
 	});
