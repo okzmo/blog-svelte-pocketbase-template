@@ -4,6 +4,7 @@
 	import type { commentType, postType, Repo } from '../../../types/types';
 	import { currentUser, pb } from '$lib/pocketbase';
 	import { onMount, onDestroy } from 'svelte';
+	import DOMPurify from 'isomorphic-dompurify';
 
 	export let data: any;
 	const userRepos: Repo[] = data.userRepos;
@@ -13,16 +14,16 @@
 	let comments: any = [];
 
 	onMount(async () => {
-
 		const results = await pb.collection('comments').getList(1, 50, {
 			sort: 'created',
 			expand: 'user',
-			filter: `(post='${post.id}')`
 		});
 
 		comments = results.items;
+		console.log(results);
+		console.log(comments)
 
-		// If you want realtime comments, uncomment those lines and comment the two lines I indicate in sendComment function
+		// If you want realtime comments, uncomment those lines and comment the lines I indicated in sendComment function
 		/*pb.collection('comments').subscribe('*', async ({ action, record }) => {
 			if (action === 'create') {
 				const user = await pb.collection('users').getOne(record.user);
@@ -53,8 +54,6 @@
 		const user = await pb.collection('users').getOne(createdComment.user);
 		createdComment.expand = { user };
 		comments = [...comments, createdComment];
-
-		
 
 		if (window.matchMedia('(max-width: 768px)').matches) {
 			const chatbox = document.querySelector('#chatbox');
@@ -107,12 +106,15 @@
 						<div
 							class="flex flex-col gap-[0.2vh] w-full border-[0.3vh] border-black p-[2vh] mb-[2vh]"
 						>
-							<span class="text-[1.8vh] font-semibold"
+							<span class="text-[1.8vh] font-bold"
 								>{comment.expand?.user?.name}
 								<span class="font-normal text-[1.4vh]">@{comment.expand?.user?.username}</span
 								></span
 							>
-							<p>{comment.comment}</p>
+							<p>{@html comment.comment.replace(
+								'@' + $currentUser?.username,
+								`<div style='background-color: rgba(255, 164, 3, 0.7); font-weight: bold; display: inline-block; padding: 0.15vh 1.2vh; border-radius: 0.6vh;'>@${$currentUser?.username}</div>`
+							)}</p>
 						</div>
 					{/each}
 				</div>
