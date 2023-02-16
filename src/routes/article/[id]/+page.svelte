@@ -21,7 +21,7 @@
 
 		comments = results.items;
 
-		// If you want realtime comments, uncomment those lines and comment the three lines I indicate in sendComment function
+		// If you want realtime comments, uncomment those lines and comment the two lines I indicate in sendComment function
 		/*pb.collection('comments').subscribe('*', async ({ action, record }) => {
 			if (action === 'create') {
 				const user = await pb.collection('users').getOne(record.user);
@@ -49,15 +49,19 @@
 
 		
 		const createdComment = await pb.collection('comments').create(data);
-		// If you want realtime comments please comment these lines
+		//If you want realtime comments please comment these lines
 		const user = await pb.collection('users').getOne(createdComment.user);
 		createdComment.expand = { user };
-		console.log(createdComment);
+		comments = [...comments, createdComment];
 		//
 
-		comments = [...comments, createdComment];
 		newComment = '';
 	}
+
+	// Uncomment only if you use the real time comments
+	/* onDestroy(() => {
+		pb.collection('comments').unsubscribe();
+	}) */
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
