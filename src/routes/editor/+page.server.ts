@@ -73,7 +73,7 @@ export const load: PageServerLoad = async ({ locals }) => {
 	if (!locals.user) {
 		console.log('running')
 		throw redirect(303, '/');
-	} else if (locals.user.role !== 'admin' && locals.user.role !== 'editor') {
+	} else if (locals.user.role !== 'admin' && locals.user.role !== 'author') {
 		throw redirect(303, '/');
 	}
 };

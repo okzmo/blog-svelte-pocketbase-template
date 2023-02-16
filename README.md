@@ -1,13 +1,13 @@
 
-# ⚠️ PROJECT STILL UNDER CONSTRUCTION, MEANING SOME FEATURES ARE NOT IMPLEMENTED YET OR INSTALLATION MIGHT FAIL.
----
+# ⚠️ The project is mostly finished but you might encounter some bugs so please make an issue if any.
 
 # An easy to use blog template ✒️ 
 You can use pocketbase as I've done or you can tweak the template with whatever you want to use but I'll only show how to use the blog with pocketbase.
 
 What can you do with pocketbase ? 
 - Create articles with a simple built in markdown editor.
-- Have users interact with your article with comments and likes. // TODO
+- Have users interact with your article with comments.
+- Ability to 'ping' a user to interact with him in the comment section. (No notification yet) 
 - Give others the ability to also write articles simply by changing their role in pocketbase.
 
 ## How to install
