@@ -1,13 +1,55 @@
 <script lang="ts">
 	import LatestProjects from '../../../components/LatestProjects.svelte';
-    import { marked } from 'marked';
+	import { marked } from 'marked';
 	import type { postType, Repo } from '../../../types/types';
 	import { currentUser, pb } from '$lib/pocketbase';
 	import { enhance, applyAction } from '$app/forms';
+	import { onMount, onDestroy } from 'svelte';
 
 	export let data: any;
 	const userRepos: Repo[] = data.userRepos;
 	const post: postType = data.post;
+
+	let newComment: string;
+	let comments: any = [];
+	let unsubscribe: () => void;
+	
+	onMount(async () => {
+		const results = await pb.collection('comments').getList(1, 50, {
+			sort: 'created',
+			expand: 'user',
+		})
+		
+		
+		comments = results.items;
+		console.log(comments);
+		
+		unsubscribe = pb.collection('comments').subscribe('*', async({action, record}) => {
+			if(action === 'create') {
+				comments = [...comments, record];
+				console.log(comments);
+			}
+
+			if (action === 'delete') {
+				comments = comments.filter((c) => c.id !== record.id);
+			}
+		})
+	})
+
+	async function sendComment() {
+		const data = {
+			comment: newComment,
+			user: $currentUser?.id,
+			post: post.id,
+		}
+
+		const createdComment = await pb.collection('comments').create(data)
+		newComment = '';
+	}
+
+	onDestroy(() => {
+		unsubscribe?.();
+	})
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
@@ -23,30 +65,39 @@
 			<h1 class="absolute bottom-3.5 left-3.5 text-3xl font-bold text-white">{post.title}</h1>
 		</div>
 		<div class="flex flex-col items-center overflow-auto">
-			<p class="prose prose-neutral lg:prose-xl prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black prose-h2:mt-3 prose-code:h-20 h-fit py-[2.5vh] lg:py-[5vh] px-[3vh] lg:px-[8vh] max-w-full">
+			<p
+				class="prose prose-neutral lg:prose-xl prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black prose-h2:mt-3 prose-code:h-20 h-fit py-[2.5vh] lg:py-[5vh] px-[3vh] lg:px-[8vh] max-w-full"
+			>
 				{@html marked.parse(post.content)}
 			</p>
 			<div class="w-full lg:px-[8vh]">
-				<div class="flex flex-col gap-[0.2vh] w-full border-[0.3vh] border-black p-[2vh] mb-[2vh]">
-					<span class="text-[1.8vh] font-semibold">Jean Michel</span>
-					<p>Ouah super article, continue comme ça pls.</p>
-				</div>
-				<div class="flex flex-col gap-[0.2vh] w-full border-[0.3vh] border-black p-[2vh] mb-[2vh]">
-					<span class="text-[1.8vh] font-semibold">Maddy Bitch</span>
-					<p><span class="bg-[#848b97] px-[0.3vh] font-medium">@Jean Michel</span> pTdR T ki.</p>
-				</div>
+				{#each comments as comment (comment.id)}
+					<div
+						class="flex flex-col gap-[0.2vh] w-full border-[0.3vh] border-black p-[2vh] mb-[2vh]"
+					>
+						<span class="text-[1.8vh] font-semibold">{comment.expand?.user?.name} <span class="font-normal text-[1.4vh]">@{comment.expand?.user?.username}</span></span>
+						<p>{comment.comment}</p>
+					</div>
+				{/each}
 				{#if $currentUser}
-					<form action="" method="post" use:enhance={() => {
-						return async ({ result }) => {
-							pb.authStore.loadFromCookie(document.cookie);
-							await applyAction(result);
-						};
-					}}>
-						<input type="text" name="comment" id="comment"  class="w-full border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] bg-transparent focus-visible:outline-none"/>
+					<form
+						action=""
+						on:submit|preventDefault={sendComment}
+					>
+					<div class="flex gap-[1vh]">
+						<input
+						type="text"
+						name="comment"
+						id="comment"
+						class="w-full border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh] bg-transparent focus-visible:outline-none" bind:value={newComment}
+					/>
+						<button type="submit" class="border-[0.3vh] border-black py-[1vh] px-[1.6vh] my-[2vh]">Send</button>
+					</div>
+						
 					</form>
 				{/if}
 			</div>
 		</div>
 	</section>
-	<LatestProjects {userRepos}/>
+	<LatestProjects {userRepos} />
 </main>
