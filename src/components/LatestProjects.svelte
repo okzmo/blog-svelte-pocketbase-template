@@ -55,9 +55,9 @@
             <a href={repo.html_url} target='_blank' rel="noreferrer" class="w-full h-fit border-b-[0.5vh] border-black py-[3.5vh] px-[3vh] flex items-center text-[2vh] justify-between relative repo hover:text-[#9fa8b6] transition">
                 <span>
                     <p class="text-[2.5vh]">{repo.name}</p>
-                    <p class="text-[1.6vh] w-[30vw]">{repo.description}</p>
+                    <p class="text-[1.6vh] w-full lg:w-[30vw]">{repo.description}</p>
                 </span>
-                <span>{repo.stargazers_count} Stars</span>
+                <span class="hidden lg:block">{repo.stargazers_count} Stars</span>
             </a>
         {/each}
     </div>
