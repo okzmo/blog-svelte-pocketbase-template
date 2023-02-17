@@ -37,19 +37,3 @@
 	</section>
 	<LatestProjects {userRepos}/>
 </main>
-
-<style>
-
-	::-webkit-scrollbar {
-		width: 5px; /* for vertical scrollbars */
-		height: 5px; /* for horizontal scrollbars */
-	}
-
-	::-webkit-scrollbar-track {
-		background: rgba(0, 0, 0, 0.1);
-	}
-
-	::-webkit-scrollbar-thumb {
-		background: rgba(0, 0, 0, 0.5);
-	}
-</style>

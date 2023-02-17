@@ -25,6 +25,9 @@
 				class="w-full h-[250px] lg:h-full object-cover"
 			/>
 			<h1 class="absolute bottom-3.5 left-3.5 text-3xl font-bold text-white">{post.title}</h1>
+			{#if post.author_id === $currentUser?.id}
+				<a href={`/editor/${post.slug+'-'+post.id}`} class="border-[0.5vh] border-black bg-[#9fa8b6] text-black px-8 py-3 lg:px-[1.2vw] lg:py-[1.2vh] text-sm lg:text-[0.8vw] lg:leading-[2vh] hover:bg-black hover:text-[#9fa8b6] transition absolute bottom-3.5 right-3.5">EDIT</a>
+			{/if}
 		</div>
 		<div id="article" class="flex flex-col items-center overflow-auto">
 			<p
