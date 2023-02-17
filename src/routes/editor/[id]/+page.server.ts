@@ -37,12 +37,26 @@ const postSchema = z.object({
 	})
 });
 
+const postSchemaNoPicture = z.object({
+	author: z.string({ required_error: 'You need to be connected.' }),
+	title: z
+		.string({ required_error: 'Your must have a title to post this article.' })
+		.max(48, { message: 'Your title must be less than 48 characters.' })
+		.trim(),
+	slug: z.string(),
+	content: z
+		.string({ required_error: 'Your must have content to post this article.' })
+		.min(64, { message: 'Your post must be at least 64 characters.' })
+		.trim(),
+});
+
 export const actions: Actions = {
 	default: async ({ locals, request, params }) => {
 		const postId = params.id.split('-')[params.id.split('-').length - 1];
 		const body = await request.formData();
-
-		const { formData, errors } = await validateData(body, postSchema);
+		const newPicture = body.get('picture')?.size > 0;
+		
+		const { formData, errors } = await validateData(body, newPicture ? postSchema : postSchemaNoPicture);
 		const { picture, ...rest } = formData;
 		console.log(formData);
 
@@ -68,14 +82,7 @@ export const actions: Actions = {
 
 export const load: PageServerLoad = async ({ locals, params }) => {
 	const postId = params.id.split('-')[params.id.split('-').length - 1];
-
-	if (!locals.user) {
-		console.log('running');
-		throw redirect(303, '/');
-	} else if (locals.user.role !== 'admin' && locals.user.role !== 'author') {
-		throw redirect(303, '/');
-	}
-
+	
 	const fetchPost = async () => {
 		try {
 			const record = structuredClone(await locals.pb.collection('posts').getOne(postId));
@@ -85,8 +92,18 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 			throw error(err.status, err.message);
 		}
 	};
+	
+	const post = await fetchPost();
+
+	if (!locals.user) {
+		throw redirect(303, `/article/${params.id}`);
+	} else if (locals.user.role !== 'admin' && locals.user.role !== 'author') {
+		throw redirect(303, `/article/${params.id}`);
+	} else if(post.author_id !== locals.user?.id) {
+		throw redirect(303, `/article/${params.id}`);
+	}
 
 	return {
-		post: fetchPost()
+		post: post,
 	};
 };
