@@ -20,6 +20,7 @@ export type postType = {
 	author: string;
 	title: string;
 	slug: string;
+	author_id: string;
 };
 
 export type registerType = {

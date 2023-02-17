@@ -1,14 +1,12 @@
 <script lang="ts">
 	import LatestProjects from '../../../components/LatestProjects.svelte';
 	import { marked } from 'marked';
-	import type { commentType, postType, Repo } from '../../../types/types';
-	import { currentUser, pb } from '$lib/pocketbase';
-	import { onMount, onDestroy } from 'svelte';
-	import DOMPurify from 'isomorphic-dompurify';
+	import type { postType, Repo } from '../../../types/types';
+	import { currentUser } from '$lib/pocketbase';
 	import CommentSection from '../../../components/CommentSection.svelte';
 
 	export let data: any;
-	const userRepos: Repo[] = data.userRepos;
+	const repos: Repo[] = data.repos;
 	const post: postType = data.post;
 
 	const postId = post.id;
@@ -40,6 +38,6 @@
 			
 		</div>
 	</section>
-	<LatestProjects {userRepos} />
+	<LatestProjects {repos}/>
 </main>
 

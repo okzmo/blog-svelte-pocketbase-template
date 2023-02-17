@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { currentUser } from '$lib/pocketbase';
 	import Post from '../components/Post.svelte';
 	import LatestProjects from '../components/LatestProjects.svelte';
 	import type { postType, Repo } from '../types/types';
 
 	export let data: any;
 	const posts: postType[] = data.posts;
-	const userRepos: Repo[] = data.userRepos;
+	const repos: Repo[] = data.repos;
 </script>
 
 <main class="flex flex-col lg:flex-row overflow-hidden border-[0.5vh] border-black lg:h-screen">
@@ -35,5 +34,5 @@
 			</div>
 		</div>
 	</section>
-	<LatestProjects {userRepos}/>
+	<LatestProjects {repos} />
 </main>

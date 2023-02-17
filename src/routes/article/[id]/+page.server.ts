@@ -1,6 +1,7 @@
 import { error, fail} from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 import { validateData } from '$lib/utils';
+import { SECRET_GITHUB_TOKEN } from '$env/static/private';
 import { z } from 'zod';
 
 const commentSchema = z.object({
@@ -38,6 +39,21 @@ export const actions: Actions = {
 export const load = (async ({ locals, params }) => {
     const postId = params.id.split('-')[params.id.split('-').length-1];
 
+	const fetchYourGithubData = async () => {
+        try {
+            const resp = await fetch('https://api.github.com/users/Mind-thatsall/repos', {
+                headers: { 
+                    authorization: SECRET_GITHUB_TOKEN
+                }
+            });
+            const data = await resp.json();
+            return data;
+        } catch (err) {
+            console.log('Error: ', err);
+            throw error(err.status, err.message);
+        }
+    };
+
     const fetchPost = async () => {
         try {
             const record = structuredClone(await locals.pb.collection('posts').getOne(postId))
@@ -49,6 +65,7 @@ export const load = (async ({ locals, params }) => {
     }
 
     return {
+		repos: fetchYourGithubData(),
         post: fetchPost(),
     }
 }) satisfies PageServerLoad
