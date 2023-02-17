@@ -54,7 +54,8 @@ export const actions: Actions = {
 	default: async ({ locals, request, params }) => {
 		const postId = params.id.split('-')[params.id.split('-').length - 1];
 		const body = await request.formData();
-		const newPicture = body.get('picture')?.size > 0;
+
+		const newPicture = (<File>body.get('picture'))?.size > 0;
 		
 		const { formData, errors } = await validateData(body, newPicture ? postSchema : postSchemaNoPicture);
 		const { picture, ...rest } = formData;
