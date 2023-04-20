@@ -50,9 +50,8 @@ export const actions: Actions = {
 			await locals.pb.collection('users').create(result);
 			await locals.pb.collection('users').authWithPassword(result.email, result.password);
 		} catch (err) {
+      console.log(err);
 			const { fieldErrors: errors } = err.flatten();
-
-			console.log(errors);
 			// sending back data to client except passwords
 			const { password, passwordConfirm, ...rest } = data;
 

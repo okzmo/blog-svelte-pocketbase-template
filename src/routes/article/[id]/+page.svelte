@@ -24,20 +24,22 @@
 			/>
 			<h1 class="absolute bottom-3.5 left-3.5 text-3xl font-bold text-white">{post.title}</h1>
 			{#if post.author_id === $currentUser?.id}
-				<a href={`/editor/${post.slug+'-'+post.id}`} class="border-[0.5vh] border-black bg-[#9fa8b6] text-black px-8 py-3 lg:px-[1.2vw] lg:py-[1.2vh] text-sm lg:text-[0.8vw] lg:leading-[2vh] hover:bg-black hover:text-[#9fa8b6] transition absolute bottom-3.5 right-3.5">EDIT</a>
+				<a
+					href={`/editor/${post.slug + '-' + post.id}`}
+					class="border-[0.5vh] border-black bg-[#9fa8b6] text-black px-8 py-3 lg:px-[1.2vw] lg:py-[1.2vh] text-sm lg:text-[0.8vw] lg:leading-[2vh] hover:bg-black hover:text-[#9fa8b6] transition absolute bottom-3.5 right-3.5"
+					>EDIT</a
+				>
 			{/if}
 		</div>
 		<div id="article" class="flex flex-col items-center overflow-auto">
-			<p
+			<div
 				class="prose prose-neutral lg:prose-xl prose-p:after:content-[''] prose-p:before:content-[''] prose-blockquote:border-l-black prose-h2:mt-3 prose-code:h-20 h-fit py-[2.5vh] lg:py-[5vh] px-[3vh] lg:px-[8vh] max-w-full"
 			>
-				{@html marked.parse(post.content)}
-			</p>
-			
-			<CommentSection {postId}/>
-			
+					{@html marked.parse(post.content)}
+			</div>
+
+			<CommentSection {postId} />
 		</div>
 	</section>
-	<LatestProjects {repos}/>
+	<LatestProjects {repos} />
 </main>
-

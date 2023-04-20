@@ -17,6 +17,7 @@
 		});
 
 		comments = results.items;
+    console.log(comments);
 
 		// If you want realtime comments, uncomment those lines and comment the lines I indicated in sendComment function
 		/*pb.collection('comments').subscribe('*', async ({ action, record }) => {
@@ -92,7 +93,7 @@
         {:else}
             <div class="w-full h-full flex justify-center items-center">
                 <h2 class="text-[4vh] font-bold">No new comments on this article</h2>
-            </div>	
+            </div>
         {/if}
     </div>
     {#if $currentUser}

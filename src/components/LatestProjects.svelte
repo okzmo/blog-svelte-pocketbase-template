@@ -61,7 +61,8 @@
 			GitHub Repositories
 		</h3>
 	</div>
-	<div class="lg:h-[62vh] overflow-auto">
+  <!--This part is to add your repositories from github if you want to WARNING : ADD YOUR GITHUB TOKEN BEFORE UNCOMMENTING -->
+	<!-- <div class="lg:h-[62vh] overflow-auto">
 		{#each repos as repo}
             <a href={repo.html_url} target='_blank' rel="noreferrer" class="w-full h-fit border-b-[0.5vh] border-black py-[3.5vh] px-[3vh] flex items-center text-[2vh] justify-between relative repo hover:text-[#9fa8b6] transition">
                 <span>
@@ -70,8 +71,8 @@
                 </span>
                 <span class="hidden lg:block">{repo.stargazers_count} Stars</span>
             </a>
-        {/each} 
-	</div>
+        {/each}
+	</div> -->
 </section>
 
 <style>
